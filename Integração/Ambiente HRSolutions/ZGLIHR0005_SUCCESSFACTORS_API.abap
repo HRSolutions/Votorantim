@@ -112,8 +112,8 @@ FORM zf_seleciona_parametros.
   SELECT *
     INTO TABLE t_parametros
     FROM ztbhr_sfsf_voran
-    WHERE begda LE pn-begda
-     AND  endda GE pn-endda
+*    WHERE begda LE pn-begda
+*     AND  endda GE pn-endda
    ORDER BY tabela_sf campo_sf.
 
   IF sy-subrc NE 0.
@@ -154,15 +154,15 @@ FORM zf_processa_reg_empregado .
 */ Cria dinâmicamente as tabelas e workareas
     CONCATENATE 'T_' w_header_param-tabela_sf INTO l_nome_objeto.
     ASSIGN (l_nome_objeto) TO <f_tabela_sf>.
-    PERFORM zf_log USING space c_error 'Erro ao Associar campo' l_nome_objeto.
+    IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo' l_nome_objeto. ENDIF.
 
     CONCATENATE 'W_' w_header_param-tabela_sf INTO l_nome_objeto.
     ASSIGN (l_nome_objeto) TO <f_workarea_sf>.
-    PERFORM zf_log USING space c_error 'Erro ao Associar campo' l_nome_objeto.
+    IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo' l_nome_objeto. ENDIF.
 
     CONCATENATE 'P' w_header_param-infty '[]' INTO l_nome_objeto.
     ASSIGN (l_nome_objeto) TO <f_tabela_sap>.
-    PERFORM zf_log USING space c_error 'Erro ao Associar campo' l_nome_objeto.
+    IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo' l_nome_objeto. ENDIF.
 */
 
 */ Ordena a tabela de forma descendente para que o primeiro registro seja o mais novo
@@ -173,23 +173,28 @@ FORM zf_processa_reg_empregado .
       LOOP AT t_parametros INTO w_parametro WHERE tabela_sf EQ w_header_param-tabela_sf.
 
         ASSIGN COMPONENT w_parametro-campo_sf  OF STRUCTURE <f_workarea_sf>  TO <f_campo_sf>.
-        PERFORM zf_log USING space c_error 'Erro ao Associar campo ' w_parametro-campo_sf.
+        IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo ' w_parametro-campo_sf. ENDIF.
 
         ASSIGN COMPONENT w_parametro-campo_sap OF STRUCTURE <f_workarea_sap> TO <f_campo_sap>.
-        PERFORM zf_log USING space c_error 'Erro ao Associar campo ' w_parametro-campo_sap.
+        IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo ' w_parametro-campo_sap. ENDIF.
+
+        IF <f_campo_sap> IS ASSIGNED AND <f_campo_sf> IS ASSIGNED.
 
 */ Preenche o campo que será enviado para o SuccessFactors
-        IF <f_campo_sap> IS ASSIGNED AND <f_campo_sf> IS ASSIGNED.
           <f_campo_sf> = <f_campo_sap>.
-        ENDIF.
 */
 
 */ Se houver tratamento via BADi
-        PERFORM zf_call_badi USING w_parametro CHANGING <f_campo_sf>.
+          IF NOT w_parametro-tratamento IS INITIAL.
+            PERFORM zf_call_badi USING w_parametro CHANGING <f_campo_sf>.
+          ENDIF.
 */
+        ENDIF.
       ENDLOOP.
 
-      APPEND <f_workarea_sf> TO <f_tabela_sf>.
+      IF <f_workarea_sf> IS ASSIGNED AND <f_tabela_sf> IS ASSIGNED.
+        APPEND <f_workarea_sf> TO <f_tabela_sf>.
+      ENDIF.
 
 */ Se não for uma tabela de histórico (Background) então registra apenas o primeiro registro
       IF w_header_param-historico IS INITIAL.
@@ -253,11 +258,7 @@ FORM zf_call_badi USING p_parametros LIKE LINE OF t_parametros
           r_value     = c_campo_sf.
 
     CATCH cx_root INTO lo_ex_root.
-*          go_log->set_single_msg( i_status    = 'ERRO'
-*                                  i_objeto    = lv_method
-*                                  i_evento    = 'BADI'
-*                                  i_pernr     = pernr-pernr
-*                                  i_descricao = 'Erro ao Chamar a Badi para o campo ->' && gw_mapping-campo_sf ).
+      PERFORM zf_log USING pernr-pernr c_warning text-002 p_parametros-campo_sf.
 
   ENDTRY.
 
