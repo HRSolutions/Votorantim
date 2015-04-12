@@ -18,7 +18,7 @@
 *----------------------------------------------------------------------*
 * Data       | Autor     | Request    | Descrição                      *
 *------------|-----------|------------|--------------------------------*
-* 02/04/2014 |           |            | Início do desenvolvimento      *
+* 06/04/2014 |           |            | Início do desenvolvimento      *
 *------------|-----------|------------|--------------------------------*
 *======================================================================*
 
@@ -62,6 +62,7 @@ TYPES: BEGIN OF y_log,
 *----------------------------------------------------------------------*
 DATA: t_log                       TYPE TABLE OF y_log,
       t_parametros                TYPE TABLE OF ztbhr_sfsf_voran,
+      t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl,
       t_user                      TYPE TABLE OF y_user,
       t_bkg_insideworkexper       TYPE TABLE OF y_bkg_insideworkexper.
 
@@ -122,6 +123,15 @@ FORM zf_seleciona_parametros.
     PERFORM zf_log USING space c_error text-001 space.
 
   ENDIF.
+
+*/ Seleciona os dados de Picklist para conversão
+
+  SELECT *
+    INTO TABLE t_picklist
+    FROM ztbhr_sfsf_pickl
+   ORDER BY picklistid externalcode.
+
+*/
 
 ENDFORM.                    "zf_seleciona_parametros
 
@@ -189,6 +199,12 @@ FORM zf_processa_reg_empregado .
             PERFORM zf_call_badi USING w_parametro CHANGING <f_campo_sf>.
           ENDIF.
 */
+
+*/ Faz a conversão da Picklist, caso o campo tenha associação com uma
+          IF NOT w_parametro-picklist IS INITIAL.
+            PERFORM zf_convert_picklist USING w_parametro CHANGING <f_campo_sf>.
+          ENDIF.
+*/
         ENDIF.
       ENDLOOP.
 
@@ -218,7 +234,7 @@ FORM zf_log  USING p_pernr
 
   w_log-pernr   = p_pernr.
   w_log-type    = p_type.
-  CONCATENATE p_message1 p_message2 INTO w_log-message.
+  CONCATENATE p_message1 p_message2 INTO w_log-message SEPARATED BY space..
 
   APPEND w_log TO t_log.
   CLEAR w_log.
@@ -263,3 +279,27 @@ FORM zf_call_badi USING p_parametros LIKE LINE OF t_parametros
   ENDTRY.
 
 ENDFORM.                    " ZF_CALL_BADI
+
+*&---------------------------------------------------------------------*
+*&      Form  ZF_CONVERT_PICKLIST
+*&---------------------------------------------------------------------*
+FORM zf_convert_picklist  USING    p_parametro LIKE LINE OF t_parametros
+                          CHANGING c_campo_sf.
+
+  DATA: w_picklist LIKE LINE OF t_picklist.
+
+  READ TABLE t_picklist INTO w_picklist WITH KEY picklistid   = p_parametro-picklist
+                                                 externalcode = c_campo_sf
+                                          BINARY SEARCH.
+
+  IF sy-subrc EQ 0.
+
+    c_campo_sf = w_picklist-id.
+
+  ELSE.
+
+    PERFORM zf_log USING pernr-pernr c_error 'Erro na conversão de picklist para o campo' p_parametro-campo_sf.
+
+  ENDIF.
+
+ENDFORM.                    " ZF_CONVERT_PICKLIST
