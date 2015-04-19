@@ -3,14 +3,14 @@
 *----------------------------------------------------------------------*
 *
 *----------------------------------------------------------------------*
-CLASS zclhr0003_sap_to_sfsf_badi DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCLHR0003_SAP_TO_SFSF_BADI definition
+  public
+  final
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES zifhr0001_user .
+  interfaces ZIFHR0001_USER .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -100,7 +100,7 @@ CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
     SORT t_p0001 BY endda DESCENDING.
     READ TABLE t_p0001 INTO w_p0001 INDEX 1.
 
-    DO.
+    DO 500 TIMES.
 
       me->get_hrp1001( EXPORTING i_plvar = '01'
                                  i_otype = 'O'
@@ -192,7 +192,7 @@ CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
         READ TABLE t_org_units_found INTO w_org_units_found INDEX 1.
 
         IF sy-subrc = 0.
-          c_value = w_org_units_found-sobid(8).
+          w_p0001-orgeh = w_org_units_found-sobid(8).
         ELSE.
           c_value = 'NO_HR'.
           EXIT.
@@ -201,6 +201,13 @@ CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
       ENDIF.
 
     ENDDO.
+
+* Se HR for ele mesmo deve enviar NO_HR
+    IF  c_value NE 'NO_HR'.
+      IF c_value = i_pernr-pernr.
+        c_value = 'NO_HR'.
+      ENDIF.
+    ENDIF.
 
   ENDMETHOD.                    "zifhr0001_user~hrexternalid
 
