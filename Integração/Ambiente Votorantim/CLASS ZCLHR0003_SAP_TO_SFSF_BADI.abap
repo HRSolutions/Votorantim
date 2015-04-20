@@ -12,23 +12,94 @@ public section.
 
   interfaces ZIFHR0001_USER .
   PROTECTED SECTION.
-  PRIVATE SECTION.
+private section.
 
-    METHODS get_hrp1001
-      IMPORTING
-        !i_plvar TYPE plog-plvar DEFAULT '01'
-        !i_otype TYPE plog-otype
-        !i_objid TYPE any
-        !i_subty TYPE plog-subty
-        !i_begda TYPE plog-begda DEFAULT '19000101'
-        !i_endda TYPE plog-endda DEFAULT '99991231'
-      EXPORTING
-        !et_1001 TYPE table .
+  methods GET_HRP1001
+    importing
+      !I_PLVAR type PLOG-PLVAR default '01'
+      !I_OTYPE type PLOG-OTYPE
+      !I_OBJID type ANY
+      !I_SUBTY type PLOG-SUBTY
+      !I_BEGDA type PLOG-BEGDA default '19000101'
+      !I_ENDDA type PLOG-ENDDA default '99991231'
+    exporting
+      !ET_1001 type TABLE .
+  methods GET_CENTRAL_PERSON
+    importing
+      !I_PERNR type ANY
+      !I_BEGDA type BEGDA default '19000101'
+      !I_ENDDA type ENDDA default '99991231'
+    exporting
+      !E_USERID type ANY .
 ENDCLASS.
 
 
 
 CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Private Method ZCLHR0003_SAP_TO_SFSF_BADI->GET_CENTRAL_PERSON
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_PERNR                        TYPE        ANY
+* | [--->] I_BEGDA                        TYPE        BEGDA (default ='19000101')
+* | [--->] I_ENDDA                        TYPE        ENDDA (default ='99991231')
+* | [<---] E_USERID                       TYPE        ANY
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+METHOD get_central_person.
+
+  DATA: t_1001 TYPE TABLE OF hrp1001.
+
+  DATA: w_objid TYPE hrp1001-objid,
+        w_1001  TYPE hrp1001.
+
+  DATA: l_pernr TYPE pernr-pernr.
+
+  l_pernr = i_pernr.
+
+*Leitura do Objeto CP
+  me->get_hrp1001( EXPORTING i_plvar = '01'
+                             i_otype = 'P'
+                             i_objid = l_pernr
+                             i_subty = 'A209'
+                             i_begda = i_begda
+                             i_endda = i_endda
+                   IMPORTING et_1001 = t_1001 ).
+
+*Elimina todos os objetos diferentes de CP
+  DELETE t_1001 WHERE sclas <> 'CP'.
+
+  SORT t_1001 BY objid begda DESCENDING.
+
+*Pega o ID do CP
+  READ TABLE t_1001 INTO w_1001 INDEX 1.
+
+  IF sy-subrc = 0.
+
+*Leitura do Objeto P
+    me->get_hrp1001( EXPORTING i_plvar = '01'
+                               i_otype = 'CP'
+                               i_objid = w_1001-sobid(8)
+                               i_subty = 'B209'
+                               i_begda = i_begda
+                               i_endda = i_endda
+                     IMPORTING et_1001 = t_1001 ).
+
+*Ordenar os registros encontrados e selecionar o SOBID com o menor BEGDA.
+    SORT t_1001 BY sobid.
+
+    DELETE ADJACENT DUPLICATES FROM t_1001 COMPARING objid.
+
+*Pega o PERNR mais antigo
+    READ TABLE t_1001 INTO w_1001 INDEX 1.
+
+    IF sy-subrc = 0.
+      e_userid = w_1001-sobid.
+    ENDIF.
+
+  ENDIF.
+
+ENDMETHOD.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
@@ -106,8 +177,6 @@ CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
                                  i_otype = 'O'
                                  i_objid = w_p0001-orgeh
                                  i_subty = 'ADHO'
-*                               i_begda = w_p0001-begda
-*                               i_endda = w_p0001-endda
                        IMPORTING et_1001 = t_1001 ).
 
 *Elimina todos os objetos diferentes de S
@@ -123,8 +192,6 @@ CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
                                    i_otype = 'S'
                                    i_objid = w_1001-sobid(8)
                                    i_subty = 'A008'
-*                               i_begda = w_p0001-begda
-*                               i_endda = w_p0001-endda
                          IMPORTING et_1001 = t_1001 ).
 
 *Elimina todos os objetos diferentes de P
@@ -134,34 +201,11 @@ CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
 
         READ TABLE t_1001 INTO w_1001 INDEX 1.
 
-        me->get_hrp1001( EXPORTING i_plvar = '01'
-                                   i_otype = 'P'
-                                   i_objid = w_1001-sobid(8)
-                                   i_subty = 'A209'
-                         IMPORTING et_1001 = t_1001 ).
-
-*Elimina todos os objetos diferentes de CP
-        DELETE t_1001 WHERE sclas <> 'CP'.
-        SORT t_1001 BY objid begda DESCENDING.
-
-        READ TABLE t_1001 INTO w_1001 INDEX 1.
-
-        me->get_hrp1001( EXPORTING i_plvar = '01'
-                                   i_otype = 'CP'
-                                   i_objid = w_1001-sobid(8)
-                                   i_subty = 'B209'
-                         IMPORTING et_1001 = t_1001 ).
-
-*Ordenar os registros encontrados e selecionar o SOBID com o menor BEGDA.
-        SORT t_1001 BY sobid.
-        DELETE ADJACENT DUPLICATES FROM t_1001 COMPARING objid.
-
-*Pega o PERNR mais antigo
-        READ TABLE t_1001 INTO w_1001 INDEX 1.
-
-        IF sy-subrc = 0.
-          c_value = w_1001-sobid.
-        ENDIF.
+        me->get_central_person(
+         EXPORTING
+           i_pernr  = w_1001-objid(8)
+         IMPORTING
+           e_userid = c_value ).
 
       ELSE.
 
@@ -225,4 +269,72 @@ CLASS ZCLHR0003_SAP_TO_SFSF_BADI IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD zifhr0001_user~id.
   ENDMETHOD.                    "ZIFHR0001_USER~ID
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCLHR0003_SAP_TO_SFSF_BADI->ZIFHR0001_USER~MANAGEREXTERNALID
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_PERNR                        TYPE        PERNR
+* | [--->] I_INFTY                        TYPE        INFTY
+* | [--->] I_SUBTY                        TYPE        SUBTY
+* | [--->] I_MOLGA                        TYPE        MOLGA
+* | [--->] I_EMPRESA                      TYPE        ZDEHR_EMPRESA_SF
+* | [--->] IT_INFOTIPO                    TYPE        TABLE
+* | [<-->] C_VALUE                        TYPE        ANY
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+METHOD zifhr0001_user~managerexternalid.
+
+  DATA: t_objects           TYPE hap_t_hrsobid,
+        w_objects           TYPE hrsobid,
+        t_target_types      TYPE hap_t_type,
+        w_target_types      TYPE hap_s_type,
+        t_objects_base      TYPE hap_t_hrsobid,
+        w_objects_base      TYPE hrsobid,
+        l_man_pernr         TYPE pa0001-pernr,
+        l_sobid             TYPE hrsobid-sobid,
+        w_p0001             TYPE p0001,
+        t_p0001             TYPE TABLE OF p0001.
+
+  CLEAR: w_objects, t_objects_base[], w_target_types, t_target_types[], t_objects[].
+
+  t_p0001[] = it_infotipo[].
+  READ TABLE t_p0001 INTO w_p0001 INDEX 1.
+
+  w_objects_base-plvar = '01'.
+  w_objects_base-otype = 'P'.
+  w_objects_base-sobid = i_pernr-pernr.
+  APPEND w_objects_base TO t_objects_base.
+
+  w_target_types-type = 'P'.
+  APPEND w_target_types TO t_target_types.
+
+*Busca o pernr do gerente
+  CALL FUNCTION 'HRHAP_0ROLE_MANAGER_DIRECT'
+    EXPORTING
+      t_objects_base = t_objects_base
+      from_date      = w_p0001-endda
+      to_date        = w_p0001-endda
+      t_target_types = t_target_types
+    IMPORTING
+      t_objects      = t_objects.
+
+*Elimina ele mesmo da tabela
+  l_sobid = i_pernr-pernr.
+  DELETE t_objects WHERE sobid = l_sobid.
+
+  READ TABLE t_objects INDEX 1 INTO w_objects_base.
+
+* Se encontrar, busca o UserId do gerente
+  IF sy-subrc = 0.
+*UserID
+    me->get_central_person(
+     EXPORTING
+       i_pernr  = w_objects_base-sobid(8)
+     IMPORTING
+       e_userid = c_value ).
+  ELSE.
+*    p_w_saida_ui_manager = c_no_manager.
+  ENDIF.
+
+ENDMETHOD.
 ENDCLASS.
