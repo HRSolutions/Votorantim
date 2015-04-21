@@ -37,18 +37,15 @@ INFOTYPES:  0000,
             0002,
             0004,
             0006,
-            0105.
+            0105,
+*            0008,
+            0465.
+*            2001.
 
 *----------------------------------------------------------------------*
 * Types                                                                *
 *----------------------------------------------------------------------*
-TYPES: BEGIN OF y_log,
-         pernr       TYPE pernr-pernr,
-         type        TYPE c,
-         message     TYPE string,
-       END OF y_log,
-
-       BEGIN OF y_user,
+TYPES: BEGIN OF y_user,
         empresa     TYPE string, "criar campo no PI sem enviar para o SFSF
         externalid  TYPE string,
         name        TYPE string,
@@ -62,7 +59,7 @@ TYPES: BEGIN OF y_log,
 *----------------------------------------------------------------------*
 * Tabela Interna                                                       *
 *----------------------------------------------------------------------*
-DATA: t_log                       TYPE TABLE OF y_log,
+DATA: t_log                       TYPE TABLE OF ztbhr_sfsf_log,
       t_parametros                TYPE TABLE OF ztbhr_sfsf_param,
       t_credenciais               TYPE TABLE OF ztbhr_sfsf_crede,
       t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl,
@@ -73,7 +70,7 @@ DATA: t_log                       TYPE TABLE OF y_log,
 * Work Área                                                            *
 *----------------------------------------------------------------------*
 DATA: w_log                       LIKE LINE OF t_log,
-      w_user                      LIKE LINE OF t_user,
+*      w_user                      LIKE LINE OF t_user,
       w_bkg_insideworkexper_i     LIKE LINE OF t_bkg_insideworkexper,
       w_bkg_insideworkexper_u     LIKE LINE OF t_bkg_insideworkexper.
 
@@ -84,6 +81,11 @@ CONSTANTS: c_error                TYPE c VALUE 'E',
            c_warning              TYPE c VALUE 'W',
            c_success              TYPE c VALUE 'S',
            c_prefixo_badi(10)     TYPE c VALUE 'ZIFHR0001_'.
+
+*----------------------------------------------------------------------*
+* Field-Symbol Global                                                  *
+*----------------------------------------------------------------------*
+FIELD-SYMBOLS: <f_t_user> TYPE table.
 
 *----------------------------------------------------------------------*
 * Tela de Seleção                                                      *
@@ -103,6 +105,8 @@ START-OF-SELECTION.
 
   PERFORM zf_seleciona_parametros.
 
+  PERFORM zf_cria_tabelas_internas.
+
   CHECK t_parametros IS NOT INITIAL.
 
 GET pernr.
@@ -116,6 +120,7 @@ END-OF-SELECTION.
 
   PERFORM zf_call_sfapi_user.
   PERFORM zf_call_sfapi_bkg.
+  PERFORM zf_gravar_log.
 
 *======================================================================*
 *                                                                      *
@@ -133,8 +138,8 @@ FORM zf_seleciona_parametros.
   SELECT *
     INTO TABLE t_parametros
     FROM ztbhr_sfsf_param
-   WHERE begda LE pn-begda
-     AND endda GE pn-endda
+   WHERE begda LE sy-datum
+     AND endda GE sy-datum
      AND infty NE space
    ORDER BY tabela_sf campo_sf.
 
@@ -187,17 +192,21 @@ FORM zf_processa_reg_empregado .
   DATA: l_nome_objeto(40) TYPE c,
         l_nome_infty      TYPE infty,
         l_empresa         TYPE char10,
-        l_operacao        TYPE char10.
+        l_operacao        TYPE char10,
+        l_infty           TYPE string.
 
   FIELD-SYMBOLS: <f_tabela_sf>    TYPE table,
                  <f_tabela_sap>   TYPE table,
                  <f_workarea_sap> TYPE any,
                  <f_workarea_sf>  TYPE any,
                  <f_campo_sf>     TYPE any,
-                 <f_campo_sap>    TYPE any.
+                 <f_campo_sap>    TYPE any,
+                 <f_infty>        TYPE any.
 
   PERFORM zf_define_empresa CHANGING l_empresa.
-
+**********EXCLUIR*************
+  l_empresa = 'VID'.
+**********EXCLUIR*************
   t_header_param[] = t_parametros[].
   DELETE ADJACENT DUPLICATES FROM t_header_param COMPARING tabela_sf.
 
@@ -214,19 +223,34 @@ FORM zf_processa_reg_empregado .
 
     LOOP AT <f_tabela_sap> ASSIGNING <f_workarea_sap>.
 
+*/    Associa dinamicamente a estrutura da tabela para enviar ao SuccessFactors
+      CONCATENATE '<F_T_' w_header_param-tabela_sf l_operacao '>' INTO l_nome_objeto.
+      ASSIGN (l_nome_objeto) TO <f_tabela_sf>.
+      IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar Tabela Interna'(005) l_nome_objeto. ENDIF.
+*/
+
 */    Associa dinamicamente a WorkArea para gravação dos dados para enviar ao SuccessFactors.
-      CONCATENATE 'W_' w_header_param-tabela_sf l_operacao INTO l_nome_objeto.
-      ASSIGN (l_nome_objeto) TO <f_workarea_sf>.
+      APPEND INITIAL LINE TO <f_tabela_sf> ASSIGNING <f_workarea_sf>.
       IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar Work Area'(006) l_nome_objeto. ENDIF.
 */
 
       LOOP AT t_parametros INTO w_parametro WHERE tabela_sf EQ w_header_param-tabela_sf.
 
+        UNASSIGN: <f_campo_sf>, <f_campo_sap>, <f_infty>.
+        CLEAR: l_infty.
+
         ASSIGN COMPONENT w_parametro-campo_sf  OF STRUCTURE <f_workarea_sf>  TO <f_campo_sf>.
         IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo '(008) w_parametro-campo_sf. ENDIF.
 
-        ASSIGN COMPONENT w_parametro-campo_sap OF STRUCTURE <f_workarea_sap> TO <f_campo_sap>.
-        IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo '(008) w_parametro-campo_sap. ENDIF.
+        l_infty = 'P' && w_parametro-infty.
+        ASSIGN (l_infty) TO <f_infty>.
+        IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar Infotipo '(008) l_infty. ENDIF.
+
+        IF <f_infty> IS ASSIGNED.
+          PERFORM zf_reg_infty USING w_parametro <f_workarea_sap> CHANGING <f_infty>.
+          ASSIGN COMPONENT w_parametro-campo_sap OF STRUCTURE <f_infty> TO <f_campo_sap>.
+          IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo '(008) w_parametro-campo_sap. ENDIF.
+        ENDIF.
 
         IF <f_campo_sap> IS ASSIGNED AND <f_campo_sf> IS ASSIGNED.
 
@@ -261,20 +285,12 @@ FORM zf_processa_reg_empregado .
       ENDIF.
 */
 
-*/    Associa dinamicamente a estrutura da tabela para enviar ao SuccessFactors
-      CONCATENATE 'T_' w_header_param-tabela_sf l_operacao INTO l_nome_objeto.
-      ASSIGN (l_nome_objeto) TO <f_tabela_sf>.
-      IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar Tabela Interna'(005) l_nome_objeto. ENDIF.
-*/
-
       IF <f_workarea_sf> IS ASSIGNED AND <f_tabela_sf> IS ASSIGNED.
 
 */      Preenche o campo empresa para diferenciar as rotas de comunicação do WebService (SFAPI)
         ASSIGN COMPONENT 'EMPRESA' OF STRUCTURE <f_workarea_sf> TO <f_campo_sf>.
         <f_campo_sf> = l_empresa.
 */
-
-        APPEND <f_workarea_sf> TO <f_tabela_sf>.
 
       ENDIF.
 
@@ -298,9 +314,25 @@ FORM zf_log  USING p_pernr
                    p_message1
                    p_message2.
 
+  STATICS: l_idlog TYPE ztbhr_sfsf_log-idlog.
+
+  IF t_log IS INITIAL.
+    SELECT MAX( idlog )
+      INTO l_idlog
+      FROM ztbhr_sfsf_log.
+
+    ADD 1 TO l_idlog.
+  ENDIF.
+
+  w_log-idlog   = l_idlog.
   w_log-pernr   = p_pernr.
   w_log-type    = p_type.
-  CONCATENATE p_message1 p_message2 INTO w_log-message SEPARATED BY space..
+  CONCATENATE p_message1 p_message2 INTO w_log-message SEPARATED BY space.
+  w_log-uname   = sy-uname.
+
+  GET TIME.
+  w_log-data    = sy-datum.
+  w_log-hora    = sy-uzeit.
 
   APPEND w_log TO t_log.
   CLEAR w_log.
@@ -324,6 +356,8 @@ FORM zf_call_badi USING p_parametros LIKE LINE OF t_parametros
 
   CONCATENATE 'P' p_parametros-infty '[]' INTO lv_infty.
   ASSIGN (lv_infty) TO <f_tabela_infty>.
+  IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar Infotipo '(007) p_parametros-infty. ENDIF.
+  CHECK <f_tabela_infty> IS ASSIGNED.
 
   CREATE OBJECT lv_obj_badi.
   CONCATENATE c_prefixo_badi p_parametros-tabela_sf '~' p_parametros-campo_sf INTO lv_method.
@@ -379,9 +413,16 @@ FORM zf_define_empresa  CHANGING c_empresa.
 
 */ Lógica para definir a qual empresa (Instância SuccessFactors) o
 *  empregado está associado.
+  SELECT SINGLE empresa_sf
+    INTO c_empresa
+    FROM ztbhr_sfsf_empre
+   WHERE empresa_sap  EQ p0001-bukrs
+     AND begda        LE sy-datum
+     AND endda        GE sy-datum.
 
-  c_empresa = 'VID'.
-
+  IF sy-subrc NE 0.
+    PERFORM zf_log USING pernr-pernr c_error 'Nenhuma Empresa SF cadastrada para a Empresa SAP'(012) p0001-bukrs.
+  ENDIF.
 */
 
 ENDFORM.                    " ZF_DEFINE_EMPRESA
@@ -688,3 +729,98 @@ FORM zf_get_delta .
 
 
 ENDFORM.                    " ZF_GET_DELTA
+
+*&---------------------------------------------------------------------*
+*&      Form  ZF_CRIA_TABELAS_INTERNAS
+*&---------------------------------------------------------------------*
+FORM zf_cria_tabelas_internas .
+
+  DATA: w_dyn_fcat        TYPE lvc_s_fcat,
+        t_dyn_fcat        TYPE lvc_t_fcat,
+        t_param_loc       LIKE t_parametros,
+        w_param_loc       LIKE LINE OF t_parametros,
+        w_parametro       LIKE LINE OF t_parametros,
+        l_o_new_type      TYPE REF TO cl_abap_structdescr,
+        l_o_new_tab       TYPE REF TO cl_abap_tabledescr,
+        t_comp            TYPE cl_abap_structdescr=>component_table,
+        w_comp            LIKE LINE OF t_comp,
+        t_table           TYPE REF TO data.
+
+  t_param_loc[] = t_parametros[].
+  SORT t_param_loc BY tabela_sf.
+  DELETE ADJACENT DUPLICATES FROM t_param_loc COMPARING tabela_sf.
+
+  LOOP AT t_param_loc INTO w_param_loc.
+
+    w_comp-name = 'EMPRESA'.
+    w_comp-type = cl_abap_elemdescr=>get_string( ).
+    APPEND w_comp TO t_comp.
+    CLEAR: w_comp.
+
+    LOOP AT t_parametros INTO w_parametro WHERE tabela_sf EQ w_param_loc-tabela_sf.
+
+      w_comp-name = w_parametro-campo_sf.
+      w_comp-type = cl_abap_elemdescr=>get_string( ).
+      APPEND w_comp TO t_comp.
+      CLEAR: w_comp.
+
+    ENDLOOP.
+
+    l_o_new_type = cl_abap_structdescr=>create( t_comp ).
+    l_o_new_tab = cl_abap_tabledescr=>create(
+                    p_line_type  = l_o_new_type
+                    p_table_kind = cl_abap_tabledescr=>tablekind_std
+                    p_unique     = abap_false ).
+
+    CREATE DATA t_table TYPE HANDLE l_o_new_tab.
+    ASSIGN t_table->* TO <f_t_user>.
+
+  ENDLOOP.
+
+ENDFORM.                    " ZF_CRIA_TABELAS_INTERNAS
+
+*&---------------------------------------------------------------------*
+*&      Form  ZF_GRAVAR_LOG
+*&---------------------------------------------------------------------*
+FORM zf_gravar_log .
+
+  MODIFY ztbhr_sfsf_log FROM TABLE t_log.
+
+ENDFORM.                    " ZF_GRAVAR_LOG
+
+*&---------------------------------------------------------------------*
+*&      Form  ZF_REG_INFTY
+*&---------------------------------------------------------------------*
+FORM zf_reg_infty  USING    p_parametro LIKE LINE OF t_parametros
+                            p_workarea_sap
+                   CHANGING p_infty.
+
+  DATA: l_infty TYPE string.
+
+  FIELD-SYMBOLS: <f_t_infty>     TYPE table,
+                 <f_w_infty>     TYPE any,
+                 <f_begda>       TYPE any,
+                 <f_begda_ref>   TYPE any,
+                 <f_endda>       TYPE any.
+
+  ASSIGN COMPONENT 'BEGDA' OF STRUCTURE p_workarea_sap TO <f_begda_ref>.
+
+  l_infty = 'P' && p_parametro-infty && '[]'.
+  ASSIGN (l_infty) TO <f_t_infty>.
+  IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar Infotipo '(008) l_infty. ENDIF.
+
+  CHECK <f_t_infty> IS ASSIGNED.
+
+  LOOP AT <f_t_infty> ASSIGNING <f_w_infty>.
+
+    ASSIGN COMPONENT 'BEGDA' OF STRUCTURE <f_w_infty> TO <f_begda>.
+    ASSIGN COMPONENT 'ENDDA' OF STRUCTURE <f_w_infty> TO <f_endda>.
+
+    IF <f_begda> LE <f_begda_ref> AND
+       <f_endda> GE <f_begda_ref>.
+      EXIT.
+    ENDIF.
+
+  ENDLOOP.
+
+ENDFORM.                    " ZF_REG_INFTY
