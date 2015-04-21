@@ -4,7 +4,7 @@
 *                                                                      *
 *======================================================================*
 * Empresa     : GLOBAL                                                 *
-* ID          : <ID de desenvolvimento fornecido pela VID, se houver>  *
+* ID          : 1903                                                   *
 * Programa    : ZGLRHR0154_INTERFACE_FACTORS                           *
 * Tipo        : Interface Outbound                                     *
 * Módulo      : HCM                                                    *
@@ -63,7 +63,7 @@ TYPES: BEGIN OF y_log,
 * Tabela Interna                                                       *
 *----------------------------------------------------------------------*
 DATA: t_log                       TYPE TABLE OF y_log,
-      t_parametros                TYPE TABLE OF ztbhr_sfsf_voran,
+      t_parametros                TYPE TABLE OF ztbhr_sfsf_param,
       t_credenciais               TYPE TABLE OF ztbhr_sfsf_crede,
       t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl,
       t_user                      TYPE TABLE OF y_user,
@@ -86,9 +86,20 @@ CONSTANTS: c_error                TYPE c VALUE 'E',
            c_prefixo_badi(10)     TYPE c VALUE 'ZIFHR0001_'.
 
 *----------------------------------------------------------------------*
+* Tela de Seleção                                                      *
+*----------------------------------------------------------------------*
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE text-000.
+PARAMETERS: p_delta AS CHECKBOX.
+SELECTION-SCREEN END OF BLOCK b1.
+
+*----------------------------------------------------------------------*
 * Início da Execução
 *----------------------------------------------------------------------*
 START-OF-SELECTION.
+
+  IF NOT p_delta IS INITIAL.
+    PERFORM zf_get_delta.
+  ENDIF.
 
   PERFORM zf_seleciona_parametros.
 
@@ -121,9 +132,10 @@ FORM zf_seleciona_parametros.
 * através da interface de integração do SuccessFactors x SAP HCM
   SELECT *
     INTO TABLE t_parametros
-    FROM ztbhr_sfsf_voran
+    FROM ztbhr_sfsf_param
    WHERE begda LE pn-begda
      AND endda GE pn-endda
+     AND infty NE space
    ORDER BY tabela_sf campo_sf.
 
   IF sy-subrc NE 0.
@@ -134,7 +146,6 @@ FORM zf_seleciona_parametros.
   ENDIF.
 
 */ Seleciona os dados de Picklist para conversão
-
   SELECT *
     INTO TABLE t_picklist
     FROM ztbhr_sfsf_pickl
@@ -322,6 +333,8 @@ FORM zf_call_badi USING p_parametros LIKE LINE OF t_parametros
       CALL METHOD lv_obj_badi->(lv_method)
         EXPORTING
           i_pernr     = pernr
+          i_empresa   = p_parametros-empresa
+          i_molga     = p_parametros-molga
           i_infty     = p_parametros-infty
           i_subty     = p_parametros-subty
           it_infotipo = <f_tabela_infty>
@@ -378,14 +391,21 @@ ENDFORM.                    " ZF_DEFINE_EMPRESA
 *&---------------------------------------------------------------------*
 FORM zf_call_sfapi_user .
 
-  DATA: t_user_loc LIKE t_user.
+  DATA: t_user_loc      LIKE t_user,
+        t_request_data  TYPE zsfi_dt_operation_request_tab2,
+        t_sfobject      TYPE zsfi_dt_operation_request__tab.
 
-  DATA: w_user_loc LIKE LINE OF t_user,
-        w_user     LIKE LINE OF t_user.
+  DATA: w_user_loc      LIKE LINE OF t_user,
+        w_user          LIKE LINE OF t_user,
+        w_parametro     LIKE LINE OF t_parametros,
+        w_request_data  LIKE LINE OF t_request_data,
+        w_sfobject      LIKE LINE OF t_sfobject.
 
   DATA: l_sessionid   TYPE string,
         l_batchsize   TYPE string,
         l_count_reg   TYPE i.
+
+  FIELD-SYMBOLS: <f_field> TYPE any.
 
   t_user_loc[] = t_user[].
 
@@ -409,10 +429,27 @@ FORM zf_call_sfapi_user .
       ENDAT.
 */
 
+      LOOP AT t_parametros INTO w_parametro WHERE empresa   EQ w_user_loc-empresa
+                                              AND tabela_sf EQ 'USER'.
+
+        w_request_data-key   = w_parametro-campo_sf.
+        ASSIGN COMPONENT w_parametro-campo_sf OF STRUCTURE w_user TO <f_field>.
+        w_request_data-value = <f_field>.
+        APPEND w_request_data TO t_request_data.
+        CLEAR w_request_data.
+        UNASSIGN <f_field>.
+
+      ENDLOOP.
+
+      w_sfobject-entity = 'USER'.
+      w_sfobject-data[] = t_request_data[].
+      APPEND w_sfobject TO t_sfobject.
+
 */    Se a quantidade de registro chegar ao total definido no Batchsize, então envia o lote para o SuccessFactors
       IF l_count_reg EQ l_batchsize.
 
 */ Lógica para o UPSERT no SuccessFactors.
+
 */
 
       ENDIF.
@@ -530,13 +567,14 @@ FORM zf_get_tabela_historico  USING    p_parametro LIKE LINE OF t_parametros
                               CHANGING c_tabela_hist.
 
 */ Verifica qual a tabela transparente responsável por guardar o histórico
-  CASE p_parametro-tabela_sf.
-    WHEN 'BKG_INSIDEWORKEXPERIENCE'.
-      c_tabela_hist = 'tabela z'.
+  SELECT SINGLE tabela_sap
+    INTO c_tabela_hist
+    FROM ztbhr_sfsf_bkg
+   WHERE alias_sf EQ p_parametro-tabela_sf.
 
-    WHEN OTHERS.
-      PERFORM zf_log USING space c_error 'Sem tabela SAP de histórico para a tabela' p_parametro-tabela_sf.
-  ENDCASE.
+  IF sy-subrc NE 0.
+    PERFORM zf_log USING space c_error 'Sem tabela SAP de histórico para a tabela' p_parametro-tabela_sf.
+  ENDIF.
 
 ENDFORM.                    " ZF_GET_TABELA_HISTORICO
 
@@ -641,3 +679,12 @@ FORM zf_call_sfapi_bkg .
 *  ENDLOOP.
 
 ENDFORM.                    " ZF_CALL_SFAPI_BKG
+
+*&---------------------------------------------------------------------*
+*&      Form  ZF_GET_DELTA
+*&---------------------------------------------------------------------*
+FORM zf_get_delta .
+
+
+
+ENDFORM.                    " ZF_GET_DELTA
