@@ -62,17 +62,12 @@ TYPES: BEGIN OF y_user,
 DATA: t_log                       TYPE TABLE OF ztbhr_sfsf_log,
       t_parametros                TYPE TABLE OF ztbhr_sfsf_param,
       t_credenciais               TYPE TABLE OF ztbhr_sfsf_crede,
-      t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl,
-      t_user                      TYPE TABLE OF y_user,
-      t_bkg_insideworkexper       TYPE TABLE OF y_bkg_insideworkexper.
+      t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl.
 
 *----------------------------------------------------------------------*
 * Work Área                                                            *
 *----------------------------------------------------------------------*
-DATA: w_log                       LIKE LINE OF t_log,
-*      w_user                      LIKE LINE OF t_user,
-      w_bkg_insideworkexper_i     LIKE LINE OF t_bkg_insideworkexper,
-      w_bkg_insideworkexper_u     LIKE LINE OF t_bkg_insideworkexper.
+DATA: w_log                       LIKE LINE OF t_log.
 
 *----------------------------------------------------------------------*
 * Constantes                                                           *
@@ -81,6 +76,11 @@ CONSTANTS: c_error                TYPE c VALUE 'E',
            c_warning              TYPE c VALUE 'W',
            c_success              TYPE c VALUE 'S',
            c_prefixo_badi(10)     TYPE c VALUE 'ZIFHR0001_'.
+
+*----------------------------------------------------------------------*
+* Variáveis                                                           *
+*----------------------------------------------------------------------*
+DATA: v_idlog TYPE ztbhr_sfsf_log-idlog.
 
 *----------------------------------------------------------------------*
 * Field-Symbol Global                                                  *
@@ -98,6 +98,8 @@ SELECTION-SCREEN END OF BLOCK b1.
 * Início da Execução
 *----------------------------------------------------------------------*
 START-OF-SELECTION.
+
+  PERFORM zf_log USING space c_success 'Início da Execução'(013) space.
 
   IF NOT p_delta IS INITIAL.
     PERFORM zf_get_delta.
@@ -120,6 +122,8 @@ END-OF-SELECTION.
 
   PERFORM zf_call_sfapi_user.
   PERFORM zf_call_sfapi_bkg.
+
+  PERFORM zf_log USING space c_success 'Fim da Execução'(014) space.
   PERFORM zf_gravar_log.
 
 *======================================================================*
@@ -314,17 +318,15 @@ FORM zf_log  USING p_pernr
                    p_message1
                    p_message2.
 
-  STATICS: l_idlog TYPE ztbhr_sfsf_log-idlog.
-
-  IF t_log IS INITIAL.
+  IF t_log[] IS INITIAL.
     SELECT MAX( idlog )
-      INTO l_idlog
+      INTO v_idlog
       FROM ztbhr_sfsf_log.
 
-    ADD 1 TO l_idlog.
+    ADD 1 TO v_idlog.
   ENDIF.
 
-  w_log-idlog   = l_idlog.
+  w_log-idlog   = v_idlog.
   w_log-pernr   = p_pernr.
   w_log-type    = p_type.
   CONCATENATE p_message1 p_message2 INTO w_log-message SEPARATED BY space.
@@ -432,49 +434,35 @@ ENDFORM.                    " ZF_DEFINE_EMPRESA
 *&---------------------------------------------------------------------*
 FORM zf_call_sfapi_user .
 
-  DATA: t_user_loc      LIKE t_user,
-        t_request_data  TYPE zsfi_dt_operation_request_tab2,
+  DATA: t_request_data  TYPE zsfi_dt_operation_request_tab2,
         t_sfobject      TYPE zsfi_dt_operation_request__tab.
 
-  DATA: w_user_loc      LIKE LINE OF t_user,
-        w_user          LIKE LINE OF t_user,
-        w_parametro     LIKE LINE OF t_parametros,
+  DATA: w_parametro     LIKE LINE OF t_parametros,
         w_request_data  LIKE LINE OF t_request_data,
-        w_sfobject      LIKE LINE OF t_sfobject.
+        w_sfobject      LIKE LINE OF t_sfobject,
+        w_credenciais   LIKE LINE OF t_credenciais.
 
   DATA: l_sessionid   TYPE string,
         l_batchsize   TYPE string,
         l_count_reg   TYPE i.
 
-  FIELD-SYMBOLS: <f_field> TYPE any.
+  FIELD-SYMBOLS: <f_field>    TYPE any,
+                 <f_w_user>   TYPE any,
+                 <f_empresa>  TYPE any.
 
-  t_user_loc[] = t_user[].
+  LOOP AT t_credenciais INTO w_credenciais.
 
-  SORT t_user_loc BY empresa.
-  DELETE ADJACENT DUPLICATES FROM t_user_loc COMPARING empresa.
+*/ Monta a Estrutura do XML para a comunicação com o SuccessFactors
+    LOOP AT <f_t_user> ASSIGNING <f_w_user>.
 
-  LOOP AT t_user_loc INTO w_user_loc.
+      ASSIGN COMPONENT 'EMPRESA' OF STRUCTURE <f_w_user> TO <f_empresa>.
+      CHECK <f_empresa> EQ w_credenciais-empresa.
 
-    LOOP AT t_user INTO w_user WHERE empresa EQ w_user_loc-empresa.
-
-*/    Efetua o Login no SuccessFactors baseado no Empresa que está sendo processada.
-      IF l_sessionid IS INITIAL.
-        PERFORM zf_login_successfactors USING w_user_loc-empresa CHANGING l_sessionid l_batchsize.
-      ENDIF.
-*/
-
-*/    Caso seja o último registro da empresa a processar, força o envio do lote mesmo não tendo chegado ao
-*     valor máximo do BatchSize
-      AT END OF empresa.
-        l_count_reg = l_batchsize.
-      ENDAT.
-*/
-
-      LOOP AT t_parametros INTO w_parametro WHERE empresa   EQ w_user_loc-empresa
+      LOOP AT t_parametros INTO w_parametro WHERE empresa   EQ w_credenciais-empresa
                                               AND tabela_sf EQ 'USER'.
 
         w_request_data-key   = w_parametro-campo_sf.
-        ASSIGN COMPONENT w_parametro-campo_sf OF STRUCTURE w_user TO <f_field>.
+        ASSIGN COMPONENT w_parametro-campo_sf OF STRUCTURE <f_w_user> TO <f_field>.
         w_request_data-value = <f_field>.
         APPEND w_request_data TO t_request_data.
         CLEAR w_request_data.
@@ -486,21 +474,17 @@ FORM zf_call_sfapi_user .
       w_sfobject-data[] = t_request_data[].
       APPEND w_sfobject TO t_sfobject.
 
-*/    Se a quantidade de registro chegar ao total definido no Batchsize, então envia o lote para o SuccessFactors
-      IF l_count_reg EQ l_batchsize.
-
-*/ Lógica para o UPSERT no SuccessFactors.
-
-*/
-
-      ENDIF.
-*/
-
-*/    Efetua o Logout no SuccessFactors.
-      PERFORM zf_logout_successfactors CHANGING l_sessionid.
-*/
+      UNASSIGN: <f_empresa>.
+      CLEAR: w_request_data,
+             t_request_data[].
 
     ENDLOOP.
+*/
+
+*/ Efetua a operação UPSERT com o XML criado no item anterior
+    PERFORM zf_call_upsert USING w_credenciais
+                                 t_sfobject.
+*/
 
   ENDLOOP.
 
@@ -513,12 +497,18 @@ FORM zf_login_successfactors  USING    p_empresa
                               CHANGING c_sessionid
                                        c_batchsize.
 
-  DATA: w_credenciais LIKE LINE OF t_credenciais.
+  DATA: l_o_login TYPE REF TO zsfi_co_si_login_request.
+
+  DATA: w_credenciais LIKE LINE OF t_credenciais,
+        w_request     TYPE zsfi_mt_login_request,
+        w_response    TYPE zsfi_mt_login_response.
 
 */ Lógica responsável por efetuar o Login no SuccessFactors
 
+  CREATE OBJECT l_o_login.
+
 */ Seleciona os dados de acesso da empresa
-  READ TABLE t_credenciais INTO w_credenciais WITH KEY companyid = p_empresa BINARY SEARCH.
+  READ TABLE t_credenciais INTO w_credenciais WITH KEY empresa = p_empresa BINARY SEARCH.
   IF sy-subrc NE 0.
     PERFORM zf_log USING space c_error text-009 p_empresa.
   ENDIF.
@@ -536,6 +526,23 @@ FORM zf_login_successfactors  USING    p_empresa
   ENDIF.
 */
 
+  w_request-mt_login_request-credential-company_id = w_credenciais-companyid.
+  w_request-mt_login_request-credential-username   = w_credenciais-username.
+  w_request-mt_login_request-credential-password   = w_credenciais-password.
+
+  CALL METHOD l_o_login->si_login_request
+    EXPORTING
+      output = w_request
+    IMPORTING
+      input  = w_response.
+
+  IF w_response-mt_login_response-session_id IS INITIAL.
+    PERFORM zf_log USING space c_error 'Erro ao Efetuar Login para a Empresa'(015) p_empresa.
+  ELSE.
+    c_sessionid = w_response-mt_login_response-session_id.
+    PERFORM zf_log USING space c_error 'Login Efetuado com Sucesso para a Empresa'(016) p_empresa.
+    PERFORM zf_log USING space c_error 'SessionID'(017) c_sessionid.
+  ENDIF.
 */
 
 ENDFORM.                    " ZF_LOGIN_SUCCESSFACTORS
@@ -784,7 +791,20 @@ ENDFORM.                    " ZF_CRIA_TABELAS_INTERNAS
 *&---------------------------------------------------------------------*
 FORM zf_gravar_log .
 
+  DATA: t_param TYPE TABLE OF rsparams,
+        w_param TYPE rsparams.
+
   MODIFY ztbhr_sfsf_log FROM TABLE t_log.
+
+  w_param-kind    = 'S'.
+  w_param-option  = 'EQ'.
+  w_param-selname = 'S_IDLOG'.
+  w_param-sign    = 'I'.
+  w_param-low     = v_idlog.
+  APPEND w_param TO t_param.
+  CLEAR w_param.
+
+  SUBMIT zglrhr0157_cockpit_log_factors WITH SELECTION-TABLE t_param.
 
 ENDFORM.                    " ZF_GRAVAR_LOG
 
@@ -824,3 +844,54 @@ FORM zf_reg_infty  USING    p_parametro LIKE LINE OF t_parametros
   ENDLOOP.
 
 ENDFORM.                    " ZF_REG_INFTY
+
+*&---------------------------------------------------------------------*
+*&      Form  ZF_CALL_UPSERT
+*&---------------------------------------------------------------------*
+FORM zf_call_upsert  USING p_credenciais LIKE LINE OF t_credenciais
+                           p_sfobject    TYPE zsfi_dt_operation_request__tab.
+
+  DATA: l_count     TYPE i,
+        l_count_tot TYPE i,
+        l_lote      TYPE i,
+        l_sessionid TYPE string,
+        l_batchsize TYPE i,
+        l_o_upsert  TYPE REF TO zsfi_co_si_upsert_request,
+        w_request   TYPE zsfi_mt_operation_request,
+        w_response  TYPE zsfi_mt_operation_response.
+
+  l_count = lines( p_sfobject ) / p_credenciais-batchsize.
+
+  DO l_count TIMES.
+
+    ADD 1 TO l_lote.
+    ADD 1 TO l_count_tot.
+
+    IF l_lote     EQ p_credenciais-batchsize OR
+       l_count_tot  EQ lines( p_sfobject ).
+
+      PERFORM zf_login_successfactors USING p_credenciais-empresa
+                                   CHANGING l_sessionid
+                                            l_batchsize.
+
+      CREATE OBJECT l_o_upsert.
+
+      w_request-mt_operation_request-entity     = 'USER'.
+      w_request-mt_operation_request-session_id = l_sessionid.
+      w_request-mt_operation_request-sfobject   = p_sfobject.
+
+      CALL METHOD l_o_upsert->si_upsert_request
+        EXPORTING
+          output = w_request
+        IMPORTING
+          input  = w_response.
+
+*/    Efetua o Logout no SuccessFactors.
+      PERFORM zf_logout_successfactors CHANGING l_sessionid.
+*/
+
+    ENDIF.
+
+  ENDDO.
+
+ENDFORM.                    " ZF_CALL_UPSERT
