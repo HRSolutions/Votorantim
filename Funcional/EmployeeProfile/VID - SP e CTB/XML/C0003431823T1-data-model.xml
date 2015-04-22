@@ -57,7 +57,7 @@
   <standard-element id="firstName" max-length="128" required="false" matrix-filter="false">
     <label>Nome</label>
     <label xml:lang="en-US">Name</label>
-    <label xml:lang="pt-BR">Nome</label>
+    <label xml:lang="pt-BR">Nome Completo</label>
     <label xml:lang="es-ES">Nombre</label>
     <label xml:lang="fr-FR">Nom</label>
     <label xml:lang="tr-TR">Adi</label>
@@ -214,15 +214,16 @@
   <standard-element id="nationality" required="false" matrix-filter="false">
     <label xml:lang="en-US">Citizenship</label>
     <label xml:lang="pt-BR">Nacionalidade</label>
-    <label xml:lang="es-ES"/>
+    <label xml:lang="es-ES">es_ES</label>
     <label xml:lang="fr-FR"/>
     <label xml:lang="tr-TR"/>
     <label xml:lang="ar-SA"/>
     <label xml:lang="zh-CN"/>
   </standard-element>
   <standard-element id="ethnicity" required="false" matrix-filter="false">
-    <label xml:lang="en-US">Ethnicity</label>
-    <label xml:lang="es-ES"/>
+    <label xml:lang="en-US">en-US</label>
+    <label xml:lang="pt-BR">Posicionamento na Faixa</label>
+    <label xml:lang="es-ES">es_ES</label>
     <label xml:lang="fr-FR"/>
     <label xml:lang="tr-TR"/>
     <label xml:lang="ar-SA"/>
@@ -248,9 +249,9 @@
   </standard-element>
   <standard-element id="businessSegment" required="false" matrix-filter="false">
     <label>Business Segment</label>
-    <label xml:lang="en-US">Business Segment</label>
-    <label xml:lang="pt-BR">Seguimento de Negócio</label>
-    <label xml:lang="es-ES"/>
+    <label xml:lang="en-US">en-US</label>
+    <label xml:lang="pt-BR">Área</label>
+    <label xml:lang="es-ES">es-ES</label>
     <label xml:lang="fr-FR"/>
     <label xml:lang="tr-TR"/>
     <label xml:lang="ar-SA"/>
@@ -302,7 +303,7 @@
   <standard-element id="empId" max-length="255" required="false" matrix-filter="false">
     <label>Id Funcionário</label>
     <label xml:lang="en-US">Employee Id</label>
-    <label xml:lang="pt-BR">Matrícula</label>
+    <label xml:lang="pt-BR">Id Funcionário</label>
     <label xml:lang="es-ES">Registro</label>
     <label xml:lang="fr-FR">Inscription</label>
     <label xml:lang="tr-TR">Kayit</label>
@@ -493,24 +494,16 @@
     <label xml:lang="zh-CN">??</label>
   </standard-element>
   <standard-element id="custom06" max-length="255" required="false" matrix-filter="false">
-    <label>E1</label>
-    <label xml:lang="en-US">E1</label>
-    <label xml:lang="pt-BR">E1</label>
-    <label xml:lang="es-ES">E1</label>
-    <label xml:lang="fr-FR">E1</label>
-    <label xml:lang="tr-TR">E1</label>
-    <label xml:lang="ar-SA">E1</label>
-    <label xml:lang="zh-CN">E1</label>
+    <label>Subárea</label>
+    <label xml:lang="en-US">en-US</label>
+    <label xml:lang="pt-BR">Subárea</label>
+    <label xml:lang="es-ES">es-ES</label>
   </standard-element>
   <standard-element id="custom07" max-length="255" required="false" matrix-filter="false">
-    <label>E2</label>
-    <label xml:lang="en-US">E2</label>
-    <label xml:lang="pt-BR">E2</label>
-    <label xml:lang="es-ES">E2</label>
-    <label xml:lang="fr-FR">E2</label>
-    <label xml:lang="tr-TR">E2</label>
-    <label xml:lang="ar-SA">E2</label>
-    <label xml:lang="zh-CN"/>
+    <label>Data no cargo</label>
+    <label xml:lang="en-US">en-US</label>
+    <label xml:lang="pt-BR">Data no cargo</label>
+    <label xml:lang="es-ES">es-ES</label>
   </standard-element>
   <standard-element id="custom08" max-length="255" required="false" matrix-filter="false">
     <label>Pipeline</label>
@@ -806,6 +799,9 @@
   </standard-element>
   <standard-element id="status" required="false" matrix-filter="false">
     <label>Status</label>
+    <label xml:lang="en-US">Status</label>
+    <label xml:lang="pt-BR">Status</label>
+    <label xml:lang="es-ES">Status</label>
   </standard-element>
   <standard-element id="userTags" max-length="255" required="false" matrix-filter="false">
     <label>Tags</label>
@@ -1037,7 +1033,7 @@
       <label xml:lang="zh-CN">????</label>
     </data-field>
   </background-element>
-  <background-element id="insideWorkExperienceBefore" type-id="50">
+  <!--<background-element id="insideWorkExperienceBefore" type-id="50">
     <label>Trajetória de Carreira Votorantim (Antes de 2007)</label>
     <label xml:lang="en-US">Work Experience Within Votorantim (Before 2007)</label>
     <label xml:lang="pt-BR">Trajetória de Carreira Votorantim (Antes de 2007)</label>
@@ -1106,12 +1102,12 @@
       <label xml:lang="ar-SA">????? ???????</label>
       <label xml:lang="zh-CN">????</label>
     </data-field>
-  </background-element>
+  </background-element>-->
   <background-element id="insideWorkExperience" type-id="5">
-    <label>Trajetória de Carreira Votorantim (Desde 2007)</label>
-    <label xml:lang="en-US">Work Experience Within Votorantim (Since 2007 - SAP)</label>
-    <label xml:lang="pt-BR">Trajetória de Carreira Votorantim (Desde 2007 - SAP)</label>
-    <label xml:lang="es-ES">Experiencia Laboral dentro de Voorantim (anterior a 2007 - SAP)</label>
+    <label>Trajetória Votorantim</label>
+    <label xml:lang="en-US">Work Experience Within Votorantim</label>
+    <label xml:lang="pt-BR">Trajetória Votorantim</label>
+    <label xml:lang="es-ES">Experiencia Laboral dentro de Voorantim</label>
     <label xml:lang="fr-FR">Expérience à VCEAA (avant 2007 - SAP)</label>
     <label xml:lang="tr-TR">VCEAA içerisindeki is deneyimi (2007 öncesi - SAP)</label>
     <label xml:lang="ar-SA">?????? ?? ????? ??? VCEAA (SAP - ??? 2007)</label>
@@ -1126,17 +1122,7 @@
       <label xml:lang="ar-SA">??????</label>
       <label xml:lang="zh-CN">??</label>
     </data-field>
-    <data-field id="job_title" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Cargo</label>
-      <label xml:lang="en-US">Job Title</label>
-      <label xml:lang="pt-BR">Cargo</label>
-      <label xml:lang="es-ES">Nombre del puesto</label>
-      <label xml:lang="fr-FR">Fonction</label>
-      <label xml:lang="tr-TR">Pozisyon</label>
-      <label xml:lang="ar-SA">?????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="unit" field-name="vfld3" required="true" max-length="4000" max-file-size-KB="1000">
+        <!--<data-field id="unit" field-name="vfld3" required="true" max-length="4000" max-file-size-KB="1000">
       <label>Unidade</label>
       <label xml:lang="en-US">Unit</label>
       <label xml:lang="pt-BR">Unidade</label>
@@ -1145,7 +1131,7 @@
       <label xml:lang="tr-TR">Birim</label>
       <label xml:lang="ar-SA">??????</label>
       <label xml:lang="zh-CN">????</label>
-    </data-field>
+    </data-field>-->
     <data-field id="department" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000">
       <label>Departamento</label>
       <label xml:lang="en-US">Departament</label>
@@ -1155,6 +1141,16 @@
       <label xml:lang="tr-TR">Departman</label>
       <label xml:lang="ar-SA">?????</label>
       <label xml:lang="zh-CN">??</label>
+    </data-field>
+    <data-field id="job_title" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Cargo</label>
+      <label xml:lang="en-US">Job Title</label>
+      <label xml:lang="pt-BR">Cargo</label>
+      <label xml:lang="es-ES">Nombre del puesto</label>
+      <label xml:lang="fr-FR">Fonction</label>
+      <label xml:lang="tr-TR">Pozisyon</label>
+      <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">????</label>
     </data-field>
     <data-field id="start_date" field-name="startDate" required="true" max-length="999" max-file-size-KB="1000">
       <label>Data Início</label>
@@ -1166,7 +1162,7 @@
       <label xml:lang="ar-SA"> ????? ???????</label>
       <label xml:lang="zh-CN">????</label>
     </data-field>
-    <data-field id="end_date" field-name="endDate" max-length="999" max-file-size-KB="1000">
+    <data-field id="end_date" field-name="endDate" required="true" max-length="999" max-file-size-KB="1000">
       <label>Data Fim</label>
       <label xml:lang="en-US">End Date</label>
       <label xml:lang="pt-BR">Data Fim</label>
@@ -1176,7 +1172,7 @@
       <label xml:lang="ar-SA">????? ???????</label>
       <label xml:lang="zh-CN">????</label>
     </data-field>
-    <data-field id="gs" field-name="vfld5" required="true" max-length="999" max-file-size-KB="1000">
+    <!--<data-field id="gs" field-name="vfld5" required="true" max-length="999" max-file-size-KB="1000">
       <label>GS</label>
       <label xml:lang="en-US">GS</label>
       <label xml:lang="pt-BR">GS</label>
@@ -1185,7 +1181,7 @@
       <label xml:lang="tr-TR">GS</label>
       <label xml:lang="ar-SA">GS</label>
       <label xml:lang="zh-CN">GS</label>
-    </data-field>
+    </data-field>-->
   </background-element>
   <background-element id="afastamento" type-id="5">
     <label>Histórico de Afastamento</label>
@@ -4273,4 +4269,5 @@
     </edit-template>
   </view-template>
 </succession-data-model>
+
 
