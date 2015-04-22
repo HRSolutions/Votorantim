@@ -43,6 +43,7 @@
     <label xml:lang="tr-TR">Cinsiyet</label>
     <label xml:lang="ar-SA">?????</label>
     <label xml:lang="zh-CN">??</label>
+    <picklist id="gender"/>
   </standard-element>
   <standard-element id="lastName" max-length="128" required="false" matrix-filter="false">
     <label>Sobrenome</label>
@@ -240,7 +241,9 @@
     <label xml:lang="zh-CN"/>
   </standard-element>
   <standard-element id="minority" required="false" matrix-filter="false">
-    <label>Diversity Candidate</label>
+    <label>Know How Crítico</label>
+    <label xml:lang="pt-BR">Know How Crítico</label>
+    <label xml:lang="en-US">en-US</label>
     <label xml:lang="es-ES"/>
     <label xml:lang="fr-FR"/>
     <label xml:lang="tr-TR"/>
@@ -261,7 +264,11 @@
     <label>Service Date</label>
   </standard-element>
   <standard-element id="level" required="false" matrix-filter="false">
-    <label>Level</label>
+    <label>Posição de desenvolvimento</label>
+    <label xml:lang="en-US">en-US</label>
+    <label xml:lang="pt-BR">Posição de desenvolvimento</label>
+    <label xml:lang="es-ES">es-ES</label>
+    <picklist id="yesno"/>
   </standard-element>
   <standard-element id="photo" required="false" matrix-filter="false">
   </standard-element>
@@ -278,9 +285,9 @@
     <label>Competency</label>
   </standard-element>
   <standard-element id="talentPool" required="false" matrix-filter="false">
-    <label>Especialista</label>
-    <label xml:lang="en-US">Especialist</label>
-    <label xml:lang="pt-BR">Especialista</label>
+    <label>Talent Pool</label>
+    <label xml:lang="en-US">Talent Pool</label>
+    <label xml:lang="pt-BR">Pool de Talentos</label>
     <label xml:lang="es-ES"/>
     <label xml:lang="fr-FR"/>
     <label xml:lang="tr-TR"/>
@@ -608,7 +615,7 @@
   <standard-element id="finalJobCode" required="false" matrix-filter="false">
   </standard-element>
   <standard-element id="dateOfCurrentPosition" required="false" matrix-filter="false">
-  <label xml:lang="en-US">Date in Actual Role</label>
+    <label xml:lang="en-US">Date in Actual Role</label>
     <label xml:lang="pt-BR">Data no Cargo</label>
     <label xml:lang="es-ES">Fecha en el puesto actual</label>
     <label xml:lang="fr-FR"/>
@@ -776,7 +783,7 @@
   <standard-element id="keyPosition" required="false" matrix-filter="false">
     <label>Key Position</label>
     <label xml:lang="en-US">Key Position</label>
-    <label xml:lang="pt-BR">Posição Chave</label>
+    <label xml:lang="pt-BR">Posição Crítica</label>
     <label xml:lang="es-ES"/>
     <label xml:lang="fr-FR"/>
     <label xml:lang="tr-TR"/>
@@ -786,7 +793,7 @@
   <standard-element id="futureLeader" required="false" matrix-filter="false">
     <label>Future Leader</label>
     <label xml:lang="en-US">Future Leader</label>
-    <label xml:lang="pt-BR">Futuro Líder</label>
+    <label xml:lang="pt-BR">Aposta</label>
     <label xml:lang="es-ES"/>
     <label xml:lang="fr-FR"/>
     <label xml:lang="tr-TR"/>
@@ -858,6 +865,68 @@
     <label xml:lang="en-US">Impact of Loss Comments</label>
     <label xml:lang="pt-BR">Comentários para Impacto da Perda</label>
   </userinfo-element>
+  <background-element id="sysScoreCardPositionPortlet" type-id="120">
+    <label>Position Portlet</label>
+  </background-element>
+  <background-element id="precomite" type-id="103">
+    <label>Pre Comitê</label>
+    <label xml:lang="en-US">Pre Work</label>
+    <label xml:lang="pt-BR">Pre Comitê</label>
+    <label xml:lang="es-ES">Pre Work</label>
+    <data-field id="customw1" field-name="ifld1" required="true" max-length="999" max-file-size-KB="1000">
+      <label>Ano</label>
+      <label xml:lang="en-US">Year</label>
+      <label xml:lang="pt-BR">Ano</label>
+      <label xml:lang="es-ES">Ano</label>
+    </data-field>
+    <data-field id="custom-string1" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Know-How Crítico</label>
+      <label xml:lang="en-US">Critical Know How</label>
+      <label xml:lang="pt-BR">Know How Crítico</label>
+      <label xml:lang="es-ES">Know How Critico</label>
+      <picklist id="yesno"/>
+    </data-field>
+    <data-field id="custom-string2" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Risco de Perda</label>
+      <label xml:lang="en-US">Risk of Loss</label>
+      <label xml:lang="pt-BR">Risco de Perda</label>
+      <label xml:lang="es-ES">Risco de Perda</label>
+      <picklist id="riskOfLoss"/>
+    </data-field>
+    <data-field id="custom-string3" field-name="vfld3" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Impacto de Perda</label>
+      <label xml:lang="en-US">Impact of Loss</label>
+      <label xml:lang="pt-BR">Impacto de Perda</label>
+      <label xml:lang="es-ES">Impacto de Perda</label>
+      <picklist id="impactOfLoss"/>
+    </data-field>
+    <data-field id="custom-string4" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Sucessor</label>
+      <label xml:lang="en-US">Sucessor</label>
+      <label xml:lang="pt-BR">Sucessor</label>
+      <label xml:lang="es-ES">Sucessor</label>
+    </data-field>
+    <data-field id="custom-string7" field-name="vfld7" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Sucessor</label>
+      <label xml:lang="en-US">Sucessor para quais posições</label>
+      <label xml:lang="pt-BR">Sucessor para quais posições</label>
+      <label xml:lang="es-ES">Sucessor para quais posições</label>
+    </data-field>
+    <data-field id="custom-string5" field-name="vfld5" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Posição de Desenvolvimento</label>
+      <label xml:lang="en-US">Developing Position</label>
+      <label xml:lang="pt-BR">Posição de Desenvolvimento</label>
+      <label xml:lang="es-ES">Posição de Desenvolvimento</label>
+      <picklist id="yesno"/>
+    </data-field>
+    <data-field id="custom-string6" field-name="vfld6" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Posição Crítico</label>
+      <label xml:lang="en-US">Critical Position</label>
+      <label xml:lang="pt-BR">Posição Crítico</label>
+      <label xml:lang="es-ES">Posição Critico</label>
+      <picklist id="yesno"/>
+    </data-field>
+  </background-element>
   <background-element id="education" type-id="1">
     <label>Formação Acadêmica</label>
     <label xml:lang="en-US">Education</label>
@@ -909,6 +978,16 @@
       <label xml:lang="zh-CN">??</label>
       <picklist id="situation"/>
     </data-field>
+    <data-field id="start-date" field-name="dfld1" max-length="4" max-file-size-KB="1000">
+      <label>Data de Início</label>
+      <label xml:lang="en-US">Start Date</label>
+      <label xml:lang="pt-BR">Data de Início</label>
+      <label xml:lang="es-ES">Fecha de Inicio</label>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
+      <label xml:lang="ar-SA">??? ????????</label>
+      <label xml:lang="zh-CN">????</label>
+    </data-field>
     <data-field id="year_completion" field-name="ifld1" max-length="4" max-file-size-KB="1000">
       <label>Ano de Conclusão</label>
       <label xml:lang="en-US">Year of Completion</label>
@@ -919,8 +998,19 @@
       <label xml:lang="ar-SA">??? ????????</label>
       <label xml:lang="zh-CN">????</label>
     </data-field>
+    <data-field id="certificate" field-name="vfld5" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Certificado</label>
+      <label xml:lang="en-US"/>
+      <label xml:lang="pt-BR">Certificado</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
+      <label xml:lang="ar-SA">???????</label>
+      <label xml:lang="zh-CN">??</label>
+      <picklist id="yesno"/>
+    </data-field>
   </background-element>
-   <background-element id="Historical" type-id="9001">
+  <background-element id="Historical" type-id="9001">
     <label>Histórico de Movimentação</label>
     <label xml:lang="es-ES">es-ES</label>
     <label xml:lang="pt-BR">Histórico de Movimentação</label>
@@ -962,7 +1052,7 @@
     <data-field id="proficiency_levels" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000">
       <label>Nível</label>
       <label xml:lang="en-US">Proficiency Levels</label>
-      <label xml:lang="pt-BR">Nível</label>
+      <label xml:lang="pt-BR">Proficiência</label>
       <label xml:lang="es-ES">Niveles de Competencia</label>
       <label xml:lang="fr-FR">Niveau de Maitrise</label>
       <label xml:lang="tr-TR">Seviye</label>
@@ -981,34 +1071,45 @@
     <label xml:lang="ar-SA">??????</label>
     <label xml:lang="zh-CN">???</label>
     <data-field id="type_mobility" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Tipo de Mobilidade</label>
-      <label xml:lang="en-US">Type of Mobility</label>
-      <label xml:lang="pt-BR">Tipo de Mobilidade</label>
-      <label xml:lang="es-ES">Tipo de movilidad</label>
-      <label xml:lang="fr-FR">Type de mobilité</label>
-      <label xml:lang="tr-TR">Mobilite tipi</label>
+      <label>Mobilidade Nacional</label>
+      <label xml:lang="en-US">National Mobility</label>
+      <label xml:lang="pt-BR">Mobilidade Nacional</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
       <label xml:lang="ar-SA">????? ??????</label>
       <label xml:lang="zh-CN">????</label>
-      <picklist id="mobility"/>
+      <picklist id="yesno"/>
+    </data-field>
+    <data-field id="international_mobility" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Mobilidade Internacional</label>
+      <label xml:lang="en-US">International Mobility</label>
+      <label xml:lang="pt-BR">Mobilidade Internacional</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
+      <label xml:lang="ar-SA">????? ??????</label>
+      <label xml:lang="zh-CN">????</label>
+      <picklist id="yesno"/>
     </data-field>
     <data-field id="restriction" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Tipo de Comentário</label>
-      <label xml:lang="en-US">Comment Type</label>
-      <label xml:lang="pt-BR">Tipo de Comentário</label>
-      <label xml:lang="es-ES">Comentarios</label>
-      <label xml:lang="fr-FR">Type de commentaire</label>
-      <label xml:lang="tr-TR">Yorum tipi</label>
+      <label>Restrição</label>
+      <label xml:lang="en-US"/>
+      <label xml:lang="pt-BR">Restrição</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
       <label xml:lang="ar-SA">?????????</label>
       <label xml:lang="zh-CN">????</label>
       <picklist id="restricao"/>
     </data-field>
     <data-field id="specification_restriction" field-name="vfld3" display-size="50" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
-      <label>Preferências/Restrições</label>
-      <label xml:lang="en-US">Preferences/Restrictions</label>
-      <label xml:lang="pt-BR">Preferências/Restrições</label>
-      <label xml:lang="es-ES">Preferencias/Restricciones</label>
-      <label xml:lang="fr-FR">Préférences/Restrictions</label>
-      <label xml:lang="tr-TR">Tercihler/Kistilar</label>
+      <label>Especificação da Restrição</label>
+      <label xml:lang="en-US"/>
+      <label xml:lang="pt-BR">Especificação da Restrição</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
       <label xml:lang="ar-SA">????????? / ??????</label>
       <label xml:lang="zh-CN">??/??</label>
     </data-field>
@@ -1022,7 +1123,16 @@
     <label xml:lang="tr-TR">Gelecek Hedefleri</label>
     <label xml:lang="ar-SA">???????? ??????????</label>
     <label xml:lang="zh-CN">????</label>
-    <data-field id="description" field-name="vfld1" required="true" display-size="200" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
+    <data-field id="aspirationsYear" field-name="vfld1" required="true" max-length="4" max-file-size-KB="1000">
+      <label>Ano</label>
+      <label xml:lang="en-US">Year</label>
+      <label xml:lang="pt-BR">Ano</label>
+      <label xml:lang="es-ES">Año</label>
+      <label xml:lang="fr-FR">Année</label>
+      <label xml:lang="tr-TR">Yil</label>
+      <picklist id="anos"/>
+    </data-field>
+    <data-field id="description" field-name="vfld2" required="true" display-size="200" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
       <label>Expectativa de Carreira</label>
       <label xml:lang="en-US">Future Aspirations</label>
       <label xml:lang="pt-BR">Expectativa de Carreira</label>
@@ -1033,76 +1143,6 @@
       <label xml:lang="zh-CN">????</label>
     </data-field>
   </background-element>
-  <!--<background-element id="insideWorkExperienceBefore" type-id="50">
-    <label>Trajetória de Carreira Votorantim (Antes de 2007)</label>
-    <label xml:lang="en-US">Work Experience Within Votorantim (Before 2007)</label>
-    <label xml:lang="pt-BR">Trajetória de Carreira Votorantim (Antes de 2007)</label>
-    <label xml:lang="es-ES">Experiencia profesional dentro de VCEAA (Antes 2007)</label>
-    <label xml:lang="fr-FR">Expérience à VCEAA (à partir de 2007)</label>
-    <label xml:lang="tr-TR">VCEAA içerisindeki is deneyimi (2007 itibariyle)</label>
-    <label xml:lang="ar-SA">??? VCEAA ?????? (??????? ?? 2007)</label>
-    <label xml:lang="zh-CN">???????????????(?2007??)</label>
-    <data-field id="company" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Empresa</label>
-      <label xml:lang="en-US">Company</label>
-      <label xml:lang="pt-BR">Empresa</label>
-      <label xml:lang="es-ES">Empresa</label>
-      <label xml:lang="fr-FR">Entreprise</label>
-      <label xml:lang="tr-TR">Sirket</label>
-      <label xml:lang="ar-SA">??????</label>
-      <label xml:lang="zh-CN">??</label>
-    </data-field>
-    <data-field id="job_title" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Cargo</label>
-      <label xml:lang="en-US">Job Title</label>
-      <label xml:lang="pt-BR">Cargo</label>
-      <label xml:lang="es-ES">Nombre del puesto</label>
-      <label xml:lang="fr-FR">Fonction</label>
-      <label xml:lang="tr-TR">Pozisyon</label>
-      <label xml:lang="ar-SA">?????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="unit" field-name="vfld3" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Unidade</label>
-      <label xml:lang="en-US">Unit</label>
-      <label xml:lang="pt-BR">Unidade</label>
-      <label xml:lang="es-ES">Unidad</label>
-      <label xml:lang="fr-FR">Structure</label>
-      <label xml:lang="tr-TR">Birim</label>
-      <label xml:lang="ar-SA">??????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="department" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Departamento</label>
-      <label xml:lang="en-US">Departament</label>
-      <label xml:lang="pt-BR">Departamento</label>
-      <label xml:lang="es-ES">Departamento</label>
-      <label xml:lang="fr-FR">Département</label>
-      <label xml:lang="tr-TR">Departman</label>
-      <label xml:lang="ar-SA">?????</label>
-      <label xml:lang="zh-CN">??</label>
-    </data-field>
-    <data-field id="start_date" field-name="startDate" required="true" max-length="999" max-file-size-KB="1000">
-      <label>Data Início</label>
-      <label xml:lang="en-US">From Date</label>
-      <label xml:lang="pt-BR">Data Início</label>
-      <label xml:lang="es-ES">Fecha de inicio</label>
-      <label xml:lang="fr-FR">Date début</label>
-      <label xml:lang="tr-TR">Baslangiç tarihi</label>
-      <label xml:lang="ar-SA"> ????? ???????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="end_date" field-name="endDate" max-length="999" max-file-size-KB="1000">
-      <label>Data Fim</label>
-      <label xml:lang="en-US">End Date</label>
-      <label xml:lang="pt-BR">Data Fim</label>
-      <label xml:lang="es-ES">Fecha de fin</label>
-      <label xml:lang="fr-FR">Date fin</label>
-      <label xml:lang="tr-TR">Bitis tarihi</label>
-      <label xml:lang="ar-SA">????? ???????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-  </background-element>-->
   <background-element id="insideWorkExperience" type-id="5">
     <label>Trajetória Votorantim</label>
     <label xml:lang="en-US">Work Experience Within Votorantim</label>
@@ -1122,16 +1162,6 @@
       <label xml:lang="ar-SA">??????</label>
       <label xml:lang="zh-CN">??</label>
     </data-field>
-        <!--<data-field id="unit" field-name="vfld3" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Unidade</label>
-      <label xml:lang="en-US">Unit</label>
-      <label xml:lang="pt-BR">Unidade</label>
-      <label xml:lang="es-ES">Unidad</label>
-      <label xml:lang="fr-FR">Structure</label>
-      <label xml:lang="tr-TR">Birim</label>
-      <label xml:lang="ar-SA">??????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>-->
     <data-field id="department" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000">
       <label>Departamento</label>
       <label xml:lang="en-US">Departament</label>
@@ -1172,16 +1202,6 @@
       <label xml:lang="ar-SA">????? ???????</label>
       <label xml:lang="zh-CN">????</label>
     </data-field>
-    <!--<data-field id="gs" field-name="vfld5" required="true" max-length="999" max-file-size-KB="1000">
-      <label>GS</label>
-      <label xml:lang="en-US">GS</label>
-      <label xml:lang="pt-BR">GS</label>
-      <label xml:lang="es-ES">GS</label>
-      <label xml:lang="fr-FR">GS</label>
-      <label xml:lang="tr-TR">GS</label>
-      <label xml:lang="ar-SA">GS</label>
-      <label xml:lang="zh-CN">GS</label>
-    </data-field>-->
   </background-element>
   <background-element id="afastamento" type-id="5">
     <label>Histórico de Afastamento</label>
@@ -1281,6 +1301,16 @@
       <label xml:lang="ar-SA">??????</label>
       <label xml:lang="zh-CN">??</label>
     </data-field>
+    <data-field id="department" field-name="vfld2" max-length="4000" max-file-size-KB="1000">
+      <label>Departamento</label>
+      <label xml:lang="en-US">Department</label>
+      <label xml:lang="pt-BR">Departamento</label>
+      <label xml:lang="es-ES">Departamento</label>
+      <label xml:lang="fr-FR">Département</label>
+      <label xml:lang="tr-TR">Departman</label>
+      <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">??</label>
+    </data-field>
     <data-field id="job_title" field-name="vfld3" required="true" max-length="4000" max-file-size-KB="1000">
       <label>Cargo</label>
       <label xml:lang="en-US">Job Title</label>
@@ -1290,16 +1320,6 @@
       <label xml:lang="tr-TR">Pozisyon</label>
       <label xml:lang="ar-SA">?????</label>
       <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="department" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Departamento</label>
-      <label xml:lang="en-US">Department</label>
-      <label xml:lang="pt-BR">Departamento</label>
-      <label xml:lang="es-ES">Departamento</label>
-      <label xml:lang="fr-FR">Département</label>
-      <label xml:lang="tr-TR">Departman</label>
-      <label xml:lang="ar-SA">?????</label>
-      <label xml:lang="zh-CN">??</label>
     </data-field>
     <data-field id="start_date" field-name="startDate" required="true" max-length="999" max-file-size-KB="1000">
       <label>Data Início</label>
@@ -1331,76 +1351,67 @@
     <label xml:lang="tr-TR">Ilgili projeler</label>
     <label xml:lang="ar-SA">?????? ??? ?????</label>
     <label xml:lang="zh-CN">????</label>
-    <data-field id="startDate" field-name="startDate" required="true" max-length="999" max-file-size-KB="1000">
-      <label>Data Início</label>
-      <label xml:lang="en-US">From Date</label>
-      <label xml:lang="pt-BR">Data Início</label>
-      <label xml:lang="es-ES">Fecha de inicio</label>
-      <label xml:lang="fr-FR">Date début</label>
-      <label xml:lang="tr-TR">Baslangiç tarihi</label>
-      <label xml:lang="ar-SA">????? ???????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="endDate" field-name="endDate" max-length="999" max-file-size-KB="1000">
-      <label>Data Encerramento</label>
-      <label xml:lang="en-US">End Date</label>
-      <label xml:lang="pt-BR">Data Encerramento</label>
-      <label xml:lang="es-ES">Fecha de fin</label>
-      <label xml:lang="fr-FR">Date fin</label>
-      <label xml:lang="tr-TR">Bitis tarihi</label>
-      <label xml:lang="ar-SA">????? ???????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="title_project" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Título do Projeto</label>
-      <label xml:lang="en-US">Title of Project</label>
-      <label xml:lang="pt-BR">Título do Projeto</label>
-      <label xml:lang="es-ES">Nombre del Proyecto</label>
+    <data-field id="customw1" field-name="ffld1" required="true" max-length="999" max-file-size-KB="1000">
+      <label>Ano</label>
+      <label xml:lang="en-US">Year</label>
+      <label xml:lang="pt-BR">Ano</label>
+      <label xml:lang="es-ES">Ano</label>
       <label xml:lang="fr-FR">Intitulé du projet</label>
       <label xml:lang="tr-TR">Proje adi</label>
       <label xml:lang="ar-SA">????? ???????</label>
       <label xml:lang="zh-CN">????</label>
+      <picklist id="anos"/>
     </data-field>
-    <data-field id="description" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
+    <data-field id="custom-string1" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
+      <label>País</label>
+      <label xml:lang="en-US">Country</label>
+      <label xml:lang="pt-BR">País</label>
+      <label xml:lang="es-ES">País</label>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
+      <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">??</label>
+    </data-field>
+    <data-field id="custom-string2" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
+      <label>País</label>
+      <label xml:lang="en-US"/>
+      <label xml:lang="pt-BR">Empresa</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
+      <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">??</label>
+    </data-field>
+    <data-field id="custom-string3" field-name="vfld3" required="true" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
       <label>Descrição</label>
-      <label xml:lang="en-US">Description</label>
+      <label xml:lang="en-US"/>
       <label xml:lang="pt-BR">Descrição</label>
-      <label xml:lang="es-ES">Descripción</label>
-      <label xml:lang="fr-FR">Description</label>
-      <label xml:lang="tr-TR">Tanim</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
+      <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">??</label>
+    </data-field>
+    <data-field id="custom-string4" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
+      <label>Resultado Obtido</label>
+      <label xml:lang="en-US"/>
+      <label xml:lang="pt-BR">Resultado Obtido</label>
+      <label xml:lang="es-ES"/>
+      <label xml:lang="fr-FR"/>
+      <label xml:lang="tr-TR"/>
       <label xml:lang="ar-SA">?????</label>
       <label xml:lang="zh-CN">??</label>
     </data-field>
   </background-element>
   <background-element id="internalTrainingParticipation" type-id="8">
-    <label>Participação nos Treinamentos Internos</label>
+    <label>Treinamentos Internos</label>
     <label xml:lang="en-US">Internal Training Participation</label>
-    <label xml:lang="pt-BR">Participação nos Treinamentos Internos</label>
+    <label xml:lang="pt-BR">Treinamentos Internos</label>
     <label xml:lang="es-ES">Formación Interna</label>
     <label xml:lang="fr-FR">Participation au Formation interne</label>
     <label xml:lang="tr-TR">Iç egitim katilimi</label>
     <label xml:lang="ar-SA">???????? ????????? ????????</label>
     <label xml:lang="zh-CN">???????</label>
-    <data-field id="startDate" field-name="startDate" required="true" max-length="999" max-file-size-KB="1000">
-      <label>Data Início</label>
-      <label xml:lang="en-US">From Date</label>
-      <label xml:lang="pt-BR">Data Início</label>
-      <label xml:lang="es-ES">Fecha de inicio</label>
-      <label xml:lang="fr-FR">Date début</label>
-      <label xml:lang="tr-TR">Baslangiç tarihi</label>
-      <label xml:lang="ar-SA">????? ???????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
-    <data-field id="endDate" field-name="endDate" max-length="999" max-file-size-KB="1000">
-      <label>Data Encerramento</label>
-      <label xml:lang="en-US">End Date</label>
-      <label xml:lang="pt-BR">Data Encerramento</label>
-      <label xml:lang="es-ES">Fecha de fin</label>
-      <label xml:lang="fr-FR">Date fin</label>
-      <label xml:lang="tr-TR">Bitis tarihi</label>
-      <label xml:lang="ar-SA">????? ???????</label>
-      <label xml:lang="zh-CN">????</label>
-    </data-field>
     <data-field id="title_training" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
       <label>Título do Treinamento</label>
       <label xml:lang="en-US">Title of Training</label>
@@ -1411,15 +1422,46 @@
       <label xml:lang="ar-SA">???????</label>
       <label xml:lang="zh-CN">????</label>
     </data-field>
-    <data-field id="description" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000" text-area-enabled="true">
-      <label>Descrição</label>
-      <label xml:lang="en-US">Description</label>
-      <label xml:lang="pt-BR">Descrição</label>
-      <label xml:lang="es-ES">Descripción</label>
-      <label xml:lang="fr-FR">Description</label>
-      <label xml:lang="tr-TR">Tanim</label>
+    <data-field id="startDate" field-name="startDate" required="true" max-length="999" max-file-size-KB="1000">
+      <label>Data Início</label>
+      <label xml:lang="en-US">From Date</label>
+      <label xml:lang="pt-BR">Data Início</label>
+      <label xml:lang="es-ES">Fecha de inicio</label>
+      <label xml:lang="fr-FR">Date début</label>
+      <label xml:lang="tr-TR">Baslangiç tarihi</label>
+      <label xml:lang="ar-SA">????? ???????</label>
+      <label xml:lang="zh-CN">????</label>
+    </data-field>
+    <data-field id="endDate" field-name="endDate" max-length="999" max-file-size-KB="1000">
+      <label>Conclusão</label>
+      <label xml:lang="en-US">End Date</label>
+      <label xml:lang="pt-BR">Conclusão</label>
+      <label xml:lang="es-ES">Fecha de fin</label>
+      <label xml:lang="fr-FR">Date fin</label>
+      <label xml:lang="tr-TR">Bitis tarihi</label>
+      <label xml:lang="ar-SA">????? ???????</label>
+      <label xml:lang="zh-CN">????</label>
+    </data-field>
+    <data-field id="length" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Duração</label>
+      <label xml:lang="en-US">Length</label>
+      <label xml:lang="pt-BR">Duração</label>
+      <label xml:lang="es-ES">Duración</label>
+      <label xml:lang="fr-FR">Durée</label>
+      <label xml:lang="tr-TR">Süre </label>
       <label xml:lang="ar-SA">?????</label>
-      <label xml:lang="zh-CN">??</label>
+      <label xml:lang="zh-CN">??(??)</label>
+    </data-field>
+    <data-field id="length2" field-name="vfld5" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Duração</label>
+      <label xml:lang="en-US">Length</label>
+      <label xml:lang="pt-BR">Duração</label>
+      <label xml:lang="es-ES">Duración</label>
+      <label xml:lang="fr-FR">Durée</label>
+      <label xml:lang="tr-TR">Süre </label>
+      <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">??(??)</label>
+      <picklist id="length"/>
     </data-field>
   </background-element>
   <background-element id="previousEvaluations" type-id="9">
@@ -1678,18 +1720,18 @@
     </data-field>
   </background-element>
   <background-element id="coursesOut" type-id="16">
-    <label>Cursos/Workshops/Seminários</label>
-    <label xml:lang="en-US">Courses/Workshops/Seminars</label>
-    <label xml:lang="pt-BR">Cursos/Workshops/Seminários</label>
-    <label xml:lang="es-ES">Cursos/Workshops/Seminarios</label>
-    <label xml:lang="fr-FR">Cours/atelier/séminaires</label>
-    <label xml:lang="tr-TR">Egitim/Çalistay/Seminer</label>
+    <label>Certificações e Cursos Relevantes</label>
+    <label xml:lang="en-US"/>
+    <label xml:lang="pt-BR">Certificações e Cursos Relevantes</label>
+    <label xml:lang="es-ES"/>
+    <label xml:lang="fr-FR"/>
+    <label xml:lang="tr-TR"/>
     <label xml:lang="ar-SA">????? / ????? ??? /????? ???????</label>
     <label xml:lang="zh-CN">??/??/???</label>
     <data-field id="course" field-name="vfld1" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Nome Curso</label>
+      <label>Nome</label>
       <label xml:lang="en-US">Course Name</label>
-      <label xml:lang="pt-BR">Nome Curso</label>
+      <label xml:lang="pt-BR">Nome</label>
       <label xml:lang="es-ES">Nombre del Curso</label>
       <label xml:lang="fr-FR">Intitulé du cours</label>
       <label xml:lang="tr-TR">Egitim adi</label>
@@ -1697,35 +1739,35 @@
       <label xml:lang="zh-CN">????</label>
     </data-field>
     <data-field id="institution" field-name="vfld2" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Nome Instituição</label>
+      <label>Instituição</label>
       <label xml:lang="en-US">Institution Name</label>
-      <label xml:lang="pt-BR">Nome Instituição</label>
+      <label xml:lang="pt-BR">Instituição</label>
       <label xml:lang="es-ES">Nombre del Centro</label>
       <label xml:lang="fr-FR">Nom de l'organisme</label>
       <label xml:lang="tr-TR">Kurum adi</label>
       <label xml:lang="ar-SA">??? ???????</label>
       <label xml:lang="zh-CN">????</label>
     </data-field>
-    <data-field id="type" field-name="vfld3" required="true" max-length="999" max-file-size-KB="1000">
-      <label>Tipo</label>
-      <label xml:lang="en-US">Type</label>
-      <label xml:lang="pt-BR">Tipo</label>
-      <label xml:lang="es-ES">Tipo</label>
-      <label xml:lang="fr-FR">Type</label>
-      <label xml:lang="tr-TR">Tipi</label>
-      <label xml:lang="ar-SA">?????</label>
-      <label xml:lang="zh-CN">??</label>
-      <picklist id="coursetype"/>
-    </data-field>
     <data-field id="length" field-name="vfld4" required="true" max-length="4000" max-file-size-KB="1000">
-      <label>Duração (Horas)</label>
-      <label xml:lang="en-US">Length (Hours)</label>
-      <label xml:lang="pt-BR">Duração (Horas)</label>
+      <label>Duração</label>
+      <label xml:lang="en-US">Length</label>
+      <label xml:lang="pt-BR">Duração</label>
       <label xml:lang="es-ES">Duración</label>
-      <label xml:lang="fr-FR">Durée (Heures)</label>
-      <label xml:lang="tr-TR">Süre (saat)</label>
+      <label xml:lang="fr-FR">Durée</label>
+      <label xml:lang="tr-TR">Süre </label>
       <label xml:lang="ar-SA">?????</label>
       <label xml:lang="zh-CN">??(??)</label>
+    </data-field>
+    <data-field id="length2" field-name="vfld5" required="true" max-length="4000" max-file-size-KB="1000">
+      <label>Duração</label>
+      <label xml:lang="en-US">Length</label>
+      <label xml:lang="pt-BR">Duração</label>
+      <label xml:lang="es-ES">Duración</label>
+      <label xml:lang="fr-FR">Durée</label>
+      <label xml:lang="tr-TR">Süre </label>
+      <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">??(??)</label>
+      <picklist id="length"/>
     </data-field>
     <data-field id="year_completion" field-name="ifld1" required="true" max-length="999" max-file-size-KB="1000">
       <label>Ano de Conclusão</label>
@@ -1817,16 +1859,6 @@
     <label xml:lang="tr-TR">Hedefler hk. (daha önceki yillar)</label>
     <label xml:lang="ar-SA">???????  (??????? ???????)</label>
     <label xml:lang="zh-CN">??????(???)</label>
-    <data-field id="achievement" field-name="vfld1" max-length="4000" max-file-size-KB="1000">
-      <label>Atingimento</label>
-      <label xml:lang="en-US">Achievement</label>
-      <label xml:lang="pt-BR">Atingimento</label>
-      <label xml:lang="es-ES">Logro</label>
-      <label xml:lang="fr-FR">Réalisation</label>
-      <label xml:lang="tr-TR">Basari</label>
-      <label xml:lang="ar-SA">???????</label>
-      <label xml:lang="zh-CN">??</label>
-    </data-field>
     <data-field id="year" field-name="ifld1" max-length="4" max-file-size-KB="1000">
       <label>Ano</label>
       <label xml:lang="en-US">Year</label>
@@ -1835,6 +1867,16 @@
       <label xml:lang="fr-FR">Année</label>
       <label xml:lang="tr-TR">Yil</label>
       <label xml:lang="ar-SA">?????</label>
+      <label xml:lang="zh-CN">??</label>
+    </data-field>
+    <data-field id="achievement" field-name="vfld1" max-length="4000" max-file-size-KB="1000">
+      <label>Atingimento</label>
+      <label xml:lang="en-US">Achievement</label>
+      <label xml:lang="pt-BR">Atingimento</label>
+      <label xml:lang="es-ES">Logro</label>
+      <label xml:lang="fr-FR">Réalisation</label>
+      <label xml:lang="tr-TR">Basari</label>
+      <label xml:lang="ar-SA">???????</label>
       <label xml:lang="zh-CN">??</label>
     </data-field>
   </background-element>
@@ -2527,9 +2569,9 @@
     <label>Successor Portlet</label>
   </background-element>
   <background-element id="sysScoreCardDevelopmentObjectivesPortlet" type-id="101">
-    <label>Ações de Desenvolvimento (PDI)</label>
+    <label>Plano de Desenvolvimento Individual</label>
     <label xml:lang="en-US">Development Objectives (IDP)</label>
-    <label xml:lang="pt-BR">Ações de Desenvolvimento (PDI)</label>
+    <label xml:lang="pt-BR">Plano de Desenvolvimento Individual</label>
     <data-field id="title" field-name="vfld1" required="true" hidden="true" max-length="999" max-file-size-KB="1000">
       <label>Development Objective</label>
     </data-field>
@@ -3625,6 +3667,8 @@
     <standard-element-ref refid="custom07"/>
     <standard-element-ref refid="custom09"/>
     <background-element-ref refid="mobility"/>
+    <background-element-ref refid="sysScoreCardNominationPortlet"/>
+    <background-element-ref refid="sysScoreCardSuccessorPortlet"/>
   </element-permission>
   <element-permission type="read">
     <description>&lt;p&gt;Grantread permissions to fields for all levels of management and HR
@@ -3668,6 +3712,8 @@
     <background-element-ref refid="education"/>
     <background-element-ref refid="coursesOut"/>
     <background-element-ref refid="languages"/>
+    <background-element-ref refid="sysScoreCardNominationPortlet"/>
+    <background-element-ref refid="sysScoreCardSuccessorPortlet"/>
   </element-permission>
   <element-permission type="read">
     <description>Grantread permissions to fields for all levels of management and HR rep</description>
@@ -3676,6 +3722,8 @@
     <role-name>EH</role-name>
     <standard-element-ref refid="custom10"/>
     <background-element-ref refid="mobility"/>
+    <background-element-ref refid="sysScoreCardNominationPortlet"/>
+    <background-element-ref refid="sysScoreCardSuccessorPortlet"/>
   </element-permission>
   <element-permission type="write">
     <description>&lt;p&gt;Grantread permissions to fields for all levels of management and HR
@@ -3697,6 +3745,8 @@
     <background-element-ref refid="coursesOut"/>
     <background-element-ref refid="languages"/>
     <background-element-ref refid="mobility"/>
+    <background-element-ref refid="sysScoreCardNominationPortlet"/>
+    <background-element-ref refid="sysScoreCardSuccessorPortlet"/>
   </element-permission>
   <dg-filters>
     <permission-group-filter>
@@ -4176,6 +4226,7 @@
       <standard-element-ref refid="custom14"/>
       <standard-element-ref refid="custom15"/>
       <standard-element-ref refid="loginMethod"/>
+      <standard-element-ref refid="level"/>
     </edit-template>
     <edit-template id="sysVisibleUserDirectorySetting">
       <label>User Directory Setting(Visible)</label>
@@ -4213,6 +4264,7 @@
       <standard-element-ref refid="state"/>
       <standard-element-ref refid="zipCode"/>
       <standard-element-ref refid="country"/>
+      <standard-element-ref refid="level"/>
     </edit-template>
     <edit-template id="photoCardFields">
       <label>Photo Card Fields</label>
@@ -4269,5 +4321,4 @@
     </edit-template>
   </view-template>
 </succession-data-model>
-
 
