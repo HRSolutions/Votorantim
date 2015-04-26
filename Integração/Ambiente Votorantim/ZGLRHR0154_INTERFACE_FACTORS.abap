@@ -45,16 +45,10 @@ INFOTYPES:  0000,
 *----------------------------------------------------------------------*
 * Types                                                                *
 *----------------------------------------------------------------------*
-TYPES: BEGIN OF y_user,
-        empresa     TYPE string, "criar campo no PI sem enviar para o SFSF
-        externalid  TYPE string,
-        name        TYPE string,
-       END OF y_user,
-
-       BEGIN OF y_bkg_insideworkexper,
-        empresa     TYPE string, "criar campo no PI sem enviar para o SFSF
-        start_date  TYPE string,
-       END OF y_bkg_insideworkexper.
+TYPES: BEGIN OF y_tabelas,
+        tabela_sf       TYPE string,
+        tabela_interna  TYPE string,
+       END OF y_tabelas.
 
 *----------------------------------------------------------------------*
 * Tabela Interna                                                       *
@@ -62,12 +56,14 @@ TYPES: BEGIN OF y_user,
 DATA: t_log                       TYPE TABLE OF ztbhr_sfsf_log,
       t_parametros                TYPE TABLE OF ztbhr_sfsf_param,
       t_credenciais               TYPE TABLE OF ztbhr_sfsf_crede,
-      t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl.
+      t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl,
+      t_tabelas                   TYPE TABLE OF y_tabelas.
 
 *----------------------------------------------------------------------*
 * Work Área                                                            *
 *----------------------------------------------------------------------*
-DATA: w_log                       LIKE LINE OF t_log.
+DATA: w_log                       LIKE LINE OF t_log,
+      w_tabelas                   LIKE LINE OF t_tabelas.
 
 *----------------------------------------------------------------------*
 * Constantes                                                           *
@@ -85,7 +81,27 @@ DATA: v_idlog TYPE ztbhr_sfsf_log-idlog.
 *----------------------------------------------------------------------*
 * Field-Symbol Global                                                  *
 *----------------------------------------------------------------------*
-FIELD-SYMBOLS: <f_t_user> TYPE table.
+FIELD-SYMBOLS: <f_t_user> TYPE table,
+               <f_t_01>   TYPE table,
+               <f_t_02>   TYPE table,
+               <f_t_03>   TYPE table,
+               <f_t_04>   TYPE table,
+               <f_t_05>   TYPE table,
+               <f_t_06>   TYPE table,
+               <f_t_07>   TYPE table,
+               <f_t_08>   TYPE table,
+               <f_t_09>   TYPE table,
+               <f_t_10>   TYPE table,
+               <f_t_11>   TYPE table,
+               <f_t_12>   TYPE table,
+               <f_t_13>   TYPE table,
+               <f_t_14>   TYPE table,
+               <f_t_15>   TYPE table,
+               <f_t_16>   TYPE table,
+               <f_t_17>   TYPE table,
+               <f_t_18>   TYPE table,
+               <f_t_19>   TYPE table,
+               <f_t_20>   TYPE table.
 
 *----------------------------------------------------------------------*
 * Tela de Seleção                                                      *
@@ -208,9 +224,7 @@ FORM zf_processa_reg_empregado .
                  <f_infty>        TYPE any.
 
   PERFORM zf_define_empresa CHANGING l_empresa.
-**********EXCLUIR*************
-  l_empresa = 'VID'.
-**********EXCLUIR*************
+
   t_header_param[] = t_parametros[].
   DELETE ADJACENT DUPLICATES FROM t_header_param COMPARING tabela_sf.
 
@@ -228,7 +242,9 @@ FORM zf_processa_reg_empregado .
     LOOP AT <f_tabela_sap> ASSIGNING <f_workarea_sap>.
 
 */    Associa dinamicamente a estrutura da tabela para enviar ao SuccessFactors
-      CONCATENATE '<F_T_' w_header_param-tabela_sf l_operacao '>' INTO l_nome_objeto.
+      CLEAR w_tabelas.
+      READ TABLE t_tabelas INTO w_tabelas WITH KEY tabela_sf = w_header_param-tabela_sf.
+      l_nome_objeto = w_tabelas-tabela_interna.
       ASSIGN (l_nome_objeto) TO <f_tabela_sf>.
       IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar Tabela Interna'(005) l_nome_objeto. ENDIF.
 */
@@ -294,6 +310,11 @@ FORM zf_processa_reg_empregado .
 */      Preenche o campo empresa para diferenciar as rotas de comunicação do WebService (SFAPI)
         ASSIGN COMPONENT 'EMPRESA' OF STRUCTURE <f_workarea_sf> TO <f_campo_sf>.
         <f_campo_sf> = l_empresa.
+*/
+
+*/      Preenche o campo operação para diferenciar o método que será invocado da SFAPI
+        ASSIGN COMPONENT 'OPERACAO' OF STRUCTURE <f_workarea_sf> TO <f_campo_sf>.
+        <f_campo_sf> = l_operacao.
 */
 
       ENDIF.
@@ -497,7 +518,9 @@ FORM zf_login_successfactors  USING    p_empresa
                               CHANGING c_sessionid
                                        c_batchsize.
 
-  DATA: l_o_login TYPE REF TO zsfi_co_si_login_request.
+  DATA: l_o_login TYPE REF TO zsfi_co_si_login_request,
+        l_o_erro  TYPE REF TO cx_root,
+        l_text    TYPE string.
 
   DATA: w_credenciais LIKE LINE OF t_credenciais,
         w_request     TYPE zsfi_mt_login_request,
@@ -530,19 +553,30 @@ FORM zf_login_successfactors  USING    p_empresa
   w_request-mt_login_request-credential-username   = w_credenciais-username.
   w_request-mt_login_request-credential-password   = w_credenciais-password.
 
-  CALL METHOD l_o_login->si_login_request
-    EXPORTING
-      output = w_request
-    IMPORTING
-      input  = w_response.
+  TRY.
 
-  IF w_response-mt_login_response-session_id IS INITIAL.
-    PERFORM zf_log USING space c_error 'Erro ao Efetuar Login para a Empresa'(015) p_empresa.
-  ELSE.
-    c_sessionid = w_response-mt_login_response-session_id.
-    PERFORM zf_log USING space c_error 'Login Efetuado com Sucesso para a Empresa'(016) p_empresa.
-    PERFORM zf_log USING space c_error 'SessionID'(017) c_sessionid.
-  ENDIF.
+      CALL METHOD l_o_login->si_login_request
+        EXPORTING
+          output = w_request
+        IMPORTING
+          input  = w_response.
+
+      IF w_response-mt_login_response-session_id IS INITIAL.
+        PERFORM zf_log USING space c_error 'Erro ao Efetuar Login para a Empresa'(015) p_empresa.
+      ELSE.
+        c_sessionid = w_response-mt_login_response-session_id.
+        PERFORM zf_log USING space c_error 'Login Efetuado com Sucesso para a Empresa'(016) p_empresa.
+        PERFORM zf_log USING space c_error 'SessionID'(017) c_sessionid.
+      ENDIF.
+
+    CATCH cx_ai_system_fault INTO l_o_erro.
+      PERFORM zf_log USING space c_error 'Erro ao Efetuar Login para a Empresa'(015) p_empresa.
+
+      l_text = l_o_erro->get_text( ).
+      PERFORM zf_log USING space c_error l_text space.
+
+  ENDTRY.
+
 */
 
 ENDFORM.                    " ZF_LOGIN_SUCCESSFACTORS
@@ -563,14 +597,20 @@ ENDFORM.                    "zf_logout_successfactors
 *&---------------------------------------------------------------------*
 FORM zf_decode_pass CHANGING c_password.
 
-  DATA: l_obj_utility TYPE REF TO cl_http_utility.
+  DATA: l_obj_utility TYPE REF TO cl_http_utility,
+        l_pass        TYPE string.
+
   CREATE OBJECT l_obj_utility.
+
+  l_pass = c_password.
 
   CALL METHOD l_obj_utility->decode_base64
     EXPORTING
-      encoded = c_password
+      encoded = l_pass
     RECEIVING
-      decoded = c_password.
+      decoded = l_pass.
+
+  c_password = l_pass.
 
 ENDFORM.                    " ZF_DECODE_PASS
 
@@ -726,6 +766,95 @@ FORM zf_call_sfapi_bkg .
 *
 *  ENDLOOP.
 
+  DATA: t_request_data  TYPE zsfi_dt_operation_request_tab2,
+         t_sfobject      TYPE zsfi_dt_operation_request__tab.
+
+  DATA: w_parametro     LIKE LINE OF t_parametros,
+        w_request_data  LIKE LINE OF t_request_data,
+        w_sfobject      LIKE LINE OF t_sfobject,
+        w_credenciais   LIKE LINE OF t_credenciais.
+
+  DATA: l_sessionid   TYPE string,
+        l_batchsize   TYPE string,
+        l_count_reg   TYPE i,
+        l_operacao    TYPE string.
+
+  FIELD-SYMBOLS: <f_field>    TYPE any,
+                 <f_empresa>  TYPE any,
+                 <f_operacao> TYPE any,
+                 <f_t_bkg>    TYPE table,
+                 <f_w_bkg>    TYPE any.
+
+  DELETE t_tabelas WHERE tabela_sf EQ 'USER'.
+
+  LOOP AT t_credenciais INTO w_credenciais.
+
+    LOOP AT t_tabelas INTO w_tabelas.
+
+      ASSIGN (w_tabelas-tabela_interna) TO <f_t_bkg>.
+
+      DO 2 TIMES.
+
+        IF sy-index EQ 1.
+          l_operacao = 'I'.
+        ELSE.
+          l_operacao = 'U'.
+        ENDIF.
+
+*/ Monta a Estrutura do XML para a comunicação com o SuccessFactors
+        LOOP AT <f_t_bkg> ASSIGNING <f_w_bkg>.
+
+          ASSIGN COMPONENT 'EMPRESA' OF STRUCTURE <f_w_bkg> TO <f_empresa>.
+          CHECK <f_empresa> EQ w_credenciais-empresa.
+
+          ASSIGN COMPONENT 'OPERACAO' OF STRUCTURE <f_w_bkg> TO <f_operacao>.
+          CHECK <f_operacao> EQ l_operacao.
+
+          LOOP AT t_parametros INTO w_parametro WHERE empresa   EQ w_credenciais-empresa
+                                                  AND tabela_sf EQ w_tabelas-tabela_sf.
+
+            w_request_data-key   = w_parametro-campo_sf.
+            ASSIGN COMPONENT w_parametro-campo_sf OF STRUCTURE <f_w_bkg> TO <f_field>.
+            w_request_data-value = <f_field>.
+            APPEND w_request_data TO t_request_data.
+            CLEAR w_request_data.
+            UNASSIGN <f_field>.
+
+          ENDLOOP.
+
+          w_sfobject-entity = w_tabelas-tabela_sf.
+          w_sfobject-data[] = t_request_data[].
+          APPEND w_sfobject TO t_sfobject.
+
+          UNASSIGN: <f_empresa>,
+                    <f_operacao>.
+
+          CLEAR: w_request_data,
+                 t_request_data[].
+
+        ENDLOOP.
+*/
+
+        IF l_operacao EQ 'I'.
+*/ Efetua a operação INSERT com o XML criado no item anterior
+          PERFORM zf_call_insert USING w_tabelas-tabela_sf
+                                       w_credenciais
+                                       t_sfobject.
+*/
+        ELSE.
+*/ Efetua a operação UPDATE com o XML criado no item anterior
+          PERFORM zf_call_update USING w_tabelas-tabela_sf
+                                       w_credenciais
+                                       t_sfobject.
+*/
+        ENDIF.
+
+      ENDDO.
+
+    ENDLOOP.
+
+  ENDLOOP.
+
 ENDFORM.                    " ZF_CALL_SFAPI_BKG
 
 *&---------------------------------------------------------------------*
@@ -751,7 +880,11 @@ FORM zf_cria_tabelas_internas .
         l_o_new_tab       TYPE REF TO cl_abap_tabledescr,
         t_comp            TYPE cl_abap_structdescr=>component_table,
         w_comp            LIKE LINE OF t_comp,
-        t_table           TYPE REF TO data.
+        t_table           TYPE REF TO data,
+        l_table           TYPE string,
+        l_count(2)        TYPE n.
+
+  FIELD-SYMBOLS: <f_table> TYPE table.
 
   t_param_loc[] = t_parametros[].
   SORT t_param_loc BY tabela_sf.
@@ -759,7 +892,16 @@ FORM zf_cria_tabelas_internas .
 
   LOOP AT t_param_loc INTO w_param_loc.
 
+    CLEAR: l_o_new_type,
+           l_o_new_tab,
+           t_comp.
+
     w_comp-name = 'EMPRESA'.
+    w_comp-type = cl_abap_elemdescr=>get_string( ).
+    APPEND w_comp TO t_comp.
+    CLEAR: w_comp.
+
+    w_comp-name = 'OPERACAO'.
     w_comp-type = cl_abap_elemdescr=>get_string( ).
     APPEND w_comp TO t_comp.
     CLEAR: w_comp.
@@ -780,7 +922,48 @@ FORM zf_cria_tabelas_internas .
                     p_unique     = abap_false ).
 
     CREATE DATA t_table TYPE HANDLE l_o_new_tab.
-    ASSIGN t_table->* TO <f_t_user>.
+
+    IF w_param_loc-tabela_sf EQ 'USER'.
+
+      ASSIGN t_table->* TO <f_t_user>.
+      w_tabelas-tabela_sf       = w_param_loc-tabela_sf.
+      w_tabelas-tabela_interna  = '<F_T_USER>'.
+      APPEND w_tabelas TO t_tabelas.
+
+    ELSE.
+
+      ADD 1 TO l_count.
+
+      CASE l_count.
+        WHEN '01'. ASSIGN t_table->* TO <f_t_01>.
+        WHEN '02'. ASSIGN t_table->* TO <f_t_02>.
+        WHEN '03'. ASSIGN t_table->* TO <f_t_03>.
+        WHEN '04'. ASSIGN t_table->* TO <f_t_04>.
+        WHEN '05'. ASSIGN t_table->* TO <f_t_05>.
+        WHEN '06'. ASSIGN t_table->* TO <f_t_06>.
+        WHEN '07'. ASSIGN t_table->* TO <f_t_07>.
+        WHEN '08'. ASSIGN t_table->* TO <f_t_08>.
+        WHEN '09'. ASSIGN t_table->* TO <f_t_09>.
+        WHEN '10'. ASSIGN t_table->* TO <f_t_10>.
+        WHEN '11'. ASSIGN t_table->* TO <f_t_11>.
+        WHEN '12'. ASSIGN t_table->* TO <f_t_12>.
+        WHEN '13'. ASSIGN t_table->* TO <f_t_13>.
+        WHEN '14'. ASSIGN t_table->* TO <f_t_14>.
+        WHEN '15'. ASSIGN t_table->* TO <f_t_15>.
+        WHEN '16'. ASSIGN t_table->* TO <f_t_16>.
+        WHEN '17'. ASSIGN t_table->* TO <f_t_17>.
+        WHEN '18'. ASSIGN t_table->* TO <f_t_18>.
+        WHEN '19'. ASSIGN t_table->* TO <f_t_19>.
+        WHEN '20'. ASSIGN t_table->* TO <f_t_20>.
+        WHEN OTHERS.
+      ENDCASE.
+
+      l_table = '<F_T_' && l_count && '>'.
+      w_tabelas-tabela_sf       = w_param_loc-tabela_sf.
+      w_tabelas-tabela_interna  = l_table.
+      APPEND w_tabelas TO t_tabelas.
+
+    ENDIF.
 
   ENDLOOP.
 
@@ -854,44 +1037,250 @@ FORM zf_call_upsert  USING p_credenciais LIKE LINE OF t_credenciais
   DATA: l_count     TYPE i,
         l_count_tot TYPE i,
         l_lote      TYPE i,
+        l_o_erro    TYPE REF TO cx_root,
+        l_text      TYPE string,
         l_sessionid TYPE string,
         l_batchsize TYPE i,
+        l_tabix     TYPE sy-tabix,
         l_o_upsert  TYPE REF TO zsfi_co_si_upsert_request,
         w_request   TYPE zsfi_mt_operation_request,
-        w_response  TYPE zsfi_mt_operation_response.
+        w_response  TYPE zsfi_mt_operation_response,
+        w_sfobject  TYPE LINE OF zsfi_dt_operation_request__tab,
+        t_sfobject  TYPE zsfi_dt_operation_request__tab.
 
   l_count = lines( p_sfobject ) / p_credenciais-batchsize.
 
   DO l_count TIMES.
 
-    ADD 1 TO l_lote.
-    ADD 1 TO l_count_tot.
+    LOOP AT p_sfobject INTO w_sfobject.
 
-    IF l_lote     EQ p_credenciais-batchsize OR
-       l_count_tot  EQ lines( p_sfobject ).
+      l_tabix = sy-tabix.
+      ADD 1 TO l_lote.
+      ADD 1 TO l_count_tot.
 
-      PERFORM zf_login_successfactors USING p_credenciais-empresa
-                                   CHANGING l_sessionid
-                                            l_batchsize.
+      APPEND w_sfobject TO t_sfobject.
+      DELETE p_sfobject INDEX l_tabix..
+      CLEAR w_sfobject.
 
-      CREATE OBJECT l_o_upsert.
+      IF l_lote     EQ p_credenciais-batchsize OR
+         l_count_tot  EQ lines( p_sfobject ).
 
-      w_request-mt_operation_request-entity     = 'USER'.
-      w_request-mt_operation_request-session_id = l_sessionid.
-      w_request-mt_operation_request-sfobject   = p_sfobject.
+        PERFORM zf_login_successfactors USING p_credenciais-empresa
+                                     CHANGING l_sessionid
+                                              l_batchsize.
 
-      CALL METHOD l_o_upsert->si_upsert_request
-        EXPORTING
-          output = w_request
-        IMPORTING
-          input  = w_response.
+        TRY.
+
+            CREATE OBJECT l_o_upsert.
+
+            w_request-mt_operation_request-entity     = 'USER'.
+            w_request-mt_operation_request-session_id = l_sessionid.
+            w_request-mt_operation_request-sfobject   = t_sfobject.
+
+            CALL METHOD l_o_upsert->si_upsert_request
+              EXPORTING
+                output = w_request
+              IMPORTING
+                input  = w_response.
+
+          CATCH cx_ai_system_fault INTO l_o_erro.
+            PERFORM zf_log USING space c_error 'Erro ao Efetuar Upsert para a Empresa'(015) p_credenciais-empresa.
+
+            l_text = l_o_erro->get_text( ).
+            PERFORM zf_log USING space c_error l_text space.
+
+          CATCH cx_ai_application_fault INTO l_o_erro.
+            PERFORM zf_log USING space c_error 'Erro ao Efetuar Upsert para a Empresa'(015) p_credenciais-empresa.
+
+            l_text = l_o_erro->get_text( ).
+            PERFORM zf_log USING space c_error l_text space.
+
+        ENDTRY.
 
 */    Efetua o Logout no SuccessFactors.
-      PERFORM zf_logout_successfactors CHANGING l_sessionid.
+        PERFORM zf_logout_successfactors CHANGING l_sessionid.
 */
 
-    ENDIF.
+        CLEAR: l_lote,
+               w_sfobject,
+               t_sfobject.
+
+      ENDIF.
+
+    ENDLOOP.
 
   ENDDO.
 
 ENDFORM.                    " ZF_CALL_UPSERT
+
+*&---------------------------------------------------------------------*
+*&      Form  zf_call_INsert
+*&---------------------------------------------------------------------*
+FORM zf_call_insert  USING p_tabela_sf
+                           p_credenciais LIKE LINE OF t_credenciais
+                           p_sfobject    TYPE zsfi_dt_operation_request__tab.
+
+  DATA: l_count     TYPE i,
+        l_count_tot TYPE i,
+        l_lote      TYPE i,
+        l_o_erro    TYPE REF TO cx_root,
+        l_text      TYPE string,
+        l_sessionid TYPE string,
+        l_batchsize TYPE i,
+        l_tabix     TYPE sy-tabix,
+        l_o_insert  TYPE REF TO zsfi_co_si_insert_request,
+        w_request   TYPE zsfi_mt_operation_request,
+        w_response  TYPE zsfi_mt_operation_response,
+        w_sfobject  TYPE LINE OF zsfi_dt_operation_request__tab,
+        t_sfobject  TYPE zsfi_dt_operation_request__tab.
+
+  l_count = lines( p_sfobject ) / p_credenciais-batchsize.
+
+  DO l_count TIMES.
+
+    LOOP AT p_sfobject INTO w_sfobject.
+
+      l_tabix = sy-tabix.
+      ADD 1 TO l_lote.
+      ADD 1 TO l_count_tot.
+
+      APPEND w_sfobject TO t_sfobject.
+      DELETE p_sfobject INDEX l_tabix.
+      CLEAR w_sfobject.
+
+      IF l_lote     EQ p_credenciais-batchsize OR
+         l_count_tot  EQ lines( p_sfobject ).
+
+        PERFORM zf_login_successfactors USING p_credenciais-empresa
+                                     CHANGING l_sessionid
+                                              l_batchsize.
+
+        TRY.
+
+            CREATE OBJECT l_o_insert.
+
+            w_request-mt_operation_request-entity     = p_tabela_sf.
+            w_request-mt_operation_request-session_id = l_sessionid.
+            w_request-mt_operation_request-sfobject   = t_sfobject.
+
+            CALL METHOD l_o_insert->si_insert_request
+              EXPORTING
+                output = w_request
+              IMPORTING
+                input  = w_response.
+
+          CATCH cx_ai_system_fault INTO l_o_erro.
+            PERFORM zf_log USING space c_error 'Erro ao Efetuar Insert para a Empresa'(018) p_credenciais-empresa.
+
+            l_text = l_o_erro->get_text( ).
+            PERFORM zf_log USING space c_error l_text space.
+
+          CATCH cx_ai_application_fault INTO l_o_erro.
+            PERFORM zf_log USING space c_error 'Erro ao Efetuar Insert para a Empresa' p_credenciais-empresa.
+
+            l_text = l_o_erro->get_text( ).
+            PERFORM zf_log USING space c_error l_text space.
+
+        ENDTRY.
+
+*/    Efetua o Logout no SuccessFactors.
+        PERFORM zf_logout_successfactors CHANGING l_sessionid.
+*/
+
+        CLEAR: l_lote,
+               w_sfobject,
+               t_sfobject.
+
+      ENDIF.
+
+    ENDLOOP.
+
+  ENDDO.
+
+ENDFORM.                    " ZF_CALL_INSERT
+
+*&---------------------------------------------------------------------*
+*&      Form  zf_call_update
+*&---------------------------------------------------------------------*
+FORM zf_call_update  USING p_tabela_sf
+                           p_credenciais LIKE LINE OF t_credenciais
+                           p_sfobject    TYPE zsfi_dt_operation_request__tab.
+
+  DATA: l_count     TYPE i,
+        l_count_tot TYPE i,
+        l_lote      TYPE i,
+        l_o_erro    TYPE REF TO cx_root,
+        l_text      TYPE string,
+        l_sessionid TYPE string,
+        l_batchsize TYPE i,
+        l_tabix     TYPE sy-tabix,
+        l_o_update  TYPE REF TO zsfi_co_si_update_request,
+        w_request   TYPE zsfi_mt_operation_request,
+        w_response  TYPE zsfi_mt_operation_response,
+        w_sfobject  TYPE LINE OF zsfi_dt_operation_request__tab,
+        t_sfobject  TYPE zsfi_dt_operation_request__tab.
+
+  l_count = lines( p_sfobject ) / p_credenciais-batchsize.
+
+  DO l_count TIMES.
+
+    LOOP AT p_sfobject INTO w_sfobject.
+
+      l_tabix = sy-tabix.
+      ADD 1 TO l_lote.
+      ADD 1 TO l_count_tot.
+
+      APPEND w_sfobject TO t_sfobject.
+      DELETE p_sfobject INDEX l_tabix..
+      CLEAR w_sfobject.
+
+      IF l_lote     EQ p_credenciais-batchsize OR
+         l_count_tot  EQ lines( p_sfobject ).
+
+        PERFORM zf_login_successfactors USING p_credenciais-empresa
+                                     CHANGING l_sessionid
+                                              l_batchsize.
+
+        TRY.
+
+            CREATE OBJECT l_o_update.
+
+            w_request-mt_operation_request-entity     = p_tabela_sf.
+            w_request-mt_operation_request-session_id = l_sessionid.
+            w_request-mt_operation_request-sfobject   = t_sfobject.
+
+            CALL METHOD l_o_update->si_update_request
+              EXPORTING
+                output = w_request
+              IMPORTING
+                input  = w_response.
+
+          CATCH cx_ai_system_fault INTO l_o_erro.
+            PERFORM zf_log USING space c_error 'Erro ao Efetuar Update para a Empresa'(019) p_credenciais-empresa.
+
+            l_text = l_o_erro->get_text( ).
+            PERFORM zf_log USING space c_error l_text space.
+
+          CATCH cx_ai_application_fault INTO l_o_erro.
+            PERFORM zf_log USING space c_error 'Erro ao Efetuar Update para a Empresa'(019) p_credenciais-empresa.
+
+            l_text = l_o_erro->get_text( ).
+            PERFORM zf_log USING space c_error l_text space.
+
+        ENDTRY.
+
+*/    Efetua o Logout no SuccessFactors.
+        PERFORM zf_logout_successfactors CHANGING l_sessionid.
+*/
+
+        CLEAR: l_lote,
+               w_sfobject,
+               t_sfobject.
+
+      ENDIF.
+
+    ENDLOOP.
+
+  ENDDO.
+
+ENDFORM.                    " ZF_CALL_UPDATE
