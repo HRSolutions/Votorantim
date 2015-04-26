@@ -8,7 +8,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -18,7 +18,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -28,7 +28,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -38,7 +38,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -48,7 +48,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -58,7 +58,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -68,7 +68,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -78,7 +78,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -88,7 +88,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -98,7 +98,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -108,7 +108,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -118,7 +118,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -128,7 +128,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -138,7 +138,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -148,7 +148,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -158,7 +158,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -168,7 +168,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -178,7 +178,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -188,7 +188,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -198,7 +198,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -208,7 +208,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -218,7 +218,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -228,7 +228,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -238,7 +238,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -248,7 +248,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -258,7 +258,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -268,7 +268,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -278,7 +278,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -288,7 +288,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -298,7 +298,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -308,7 +308,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -318,7 +318,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -328,7 +328,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -338,7 +338,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -348,7 +348,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -358,7 +358,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -368,7 +368,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -378,7 +378,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -388,7 +388,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -398,7 +398,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -408,7 +408,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -418,7 +418,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -428,7 +428,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -438,7 +438,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -448,7 +448,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -458,7 +458,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -468,7 +468,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -478,7 +478,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -488,7 +488,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -498,7 +498,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -508,7 +508,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -518,7 +518,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -528,7 +528,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -538,7 +538,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -548,7 +548,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -558,7 +558,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -568,7 +568,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -578,7 +578,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -588,7 +588,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -598,7 +598,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -608,7 +608,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -618,7 +618,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -628,7 +628,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -638,7 +638,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -648,7 +648,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -658,7 +658,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -668,7 +668,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -678,7 +678,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -688,7 +688,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -698,7 +698,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -708,7 +708,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -718,7 +718,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -728,7 +728,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -738,7 +738,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -748,7 +748,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -758,7 +758,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -768,7 +768,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -778,7 +778,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -788,7 +788,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -798,7 +798,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -808,7 +808,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -818,7 +818,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -828,7 +828,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -838,7 +838,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -848,7 +848,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -858,7 +858,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -868,7 +868,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -878,7 +878,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -888,7 +888,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -898,7 +898,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -908,7 +908,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -918,7 +918,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -928,7 +928,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -938,7 +938,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -948,7 +948,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -958,7 +958,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -968,7 +968,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -978,7 +978,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -988,7 +988,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -998,7 +998,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1008,7 +1008,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1018,7 +1018,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1028,7 +1028,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1038,7 +1038,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1048,7 +1048,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1058,7 +1058,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1068,7 +1068,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1078,7 +1078,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1088,7 +1088,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1098,7 +1098,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1108,7 +1108,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1118,7 +1118,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1128,7 +1128,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1138,7 +1138,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1148,7 +1148,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1158,7 +1158,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1168,7 +1168,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1178,7 +1178,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1188,7 +1188,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1198,7 +1198,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1208,7 +1208,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1218,7 +1218,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1228,7 +1228,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1238,7 +1238,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1248,7 +1248,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1258,7 +1258,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1268,7 +1268,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1278,7 +1278,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1288,7 +1288,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1298,7 +1298,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1308,7 +1308,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1318,7 +1318,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1328,7 +1328,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1338,7 +1338,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1348,7 +1348,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1358,7 +1358,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1368,7 +1368,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .
@@ -1378,7 +1378,7 @@ interface ZIFHR0001_USER
       !I_INFTY type INFTY
       !I_SUBTY type SUBTY
       !I_MOLGA type MOLGA
-      !I_EMPRESA type ZDEHR_EMPRESA_SF
+      !I_EMPRESA type ZDEHR_EMPRESA_SF !I_EMPRESA_SAP type BUKRS
       !IT_INFOTIPO type TABLE
     changing
       !C_VALUE type ANY .

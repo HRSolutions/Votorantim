@@ -280,7 +280,7 @@ FORM zf_processa_reg_empregado .
 
 */        Se houver tratamento via BADi
           IF NOT w_parametro-tratamento IS INITIAL.
-            PERFORM zf_call_badi USING w_parametro CHANGING <f_campo_sf>.
+            PERFORM zf_call_badi USING w_parametro pernr-bukrs CHANGING <f_campo_sf>.
           ENDIF.
 */
 
@@ -365,7 +365,8 @@ ENDFORM.                    " ZF_LOG
 *&---------------------------------------------------------------------*
 *&      Form  ZF_CALL_BADI
 *&---------------------------------------------------------------------*
-FORM zf_call_badi USING p_parametros LIKE LINE OF t_parametros
+FORM zf_call_badi USING p_parametros  LIKE LINE OF t_parametros
+                        p_empresa_sap
                CHANGING c_campo_sf.
 
   FIELD-SYMBOLS: <f_tabela_infty>    TYPE ANY TABLE.
@@ -389,14 +390,15 @@ FORM zf_call_badi USING p_parametros LIKE LINE OF t_parametros
 
       CALL METHOD lv_obj_badi->(lv_method)
         EXPORTING
-          i_pernr     = pernr
-          i_empresa   = p_parametros-empresa
-          i_molga     = p_parametros-molga
-          i_infty     = p_parametros-infty
-          i_subty     = p_parametros-subty
-          it_infotipo = <f_tabela_infty>
+          i_pernr       = pernr
+          i_empresa     = p_parametros-empresa
+          i_empresa_sap = p_empresa_sap
+          i_molga       = p_parametros-molga
+          i_infty       = p_parametros-infty
+          i_subty       = p_parametros-subty
+          it_infotipo   = <f_tabela_infty>
         CHANGING
-          r_value     = c_campo_sf.
+          r_value       = c_campo_sf.
 
     CATCH cx_root INTO lo_ex_root.
       PERFORM zf_log USING pernr-pernr c_warning text-002 p_parametros-campo_sf.
