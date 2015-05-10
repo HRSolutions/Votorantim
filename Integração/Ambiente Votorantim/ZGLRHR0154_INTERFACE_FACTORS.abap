@@ -60,7 +60,15 @@ DATA: t_log                       TYPE TABLE OF ztbhr_sfsf_log,
       t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl,
       t_tabelas                   TYPE TABLE OF y_tabelas,
       t_idio                      TYPE zcthr_idiomas,
-      t_pess                      TYPE zcthr_dados_pessoais_string.
+      t_pess                      TYPE zcthr_dados_pessoais_string,
+      t_acad                      TYPE zcthr_form_academica_d,
+      t_posg                      TYPE zcthr_pos_graduacao,
+      t_comp                      TYPE zcthr_form_comp,
+      t_info                      TYPE zcthr_informatica,
+      t_movt                      TYPE zcthr_mov_votorantim,
+      t_hist                      TYPE zcthr_hist_profissional,
+      t_proj                      TYPE zcthr_exp_prof,
+      t_trei                      TYPE zcthr_treina.
 
 *----------------------------------------------------------------------*
 * Work Área                                                            *
@@ -68,7 +76,15 @@ DATA: t_log                       TYPE TABLE OF ztbhr_sfsf_log,
 DATA: w_log                       LIKE LINE OF t_log,
       w_tabelas                   LIKE LINE OF t_tabelas,
       w_idio                      LIKE LINE OF t_idio,
-      w_pess                      LIKE LINE OF t_pess.
+      w_pess                      LIKE LINE OF t_pess,
+      w_acad                      LIKE LINE OF t_acad,
+      w_posg                      LIKE LINE OF t_posg,
+      w_comp                      LIKE LINE OF t_comp,
+      w_info                      LIKE LINE OF t_info,
+      w_movt                      LIKE LINE OF t_movt,
+      w_hist                      LIKE LINE OF t_hist,
+      w_proj                      LIKE LINE OF t_proj,
+      w_trei                      LIKE LINE OF t_trei.
 
 *----------------------------------------------------------------------*
 * Constantes                                                           *
@@ -441,9 +457,16 @@ FORM zf_call_badi USING p_parametros  LIKE LINE OF t_parametros
   DATA: l_o_ex_root TYPE REF TO cx_root,
         l_message  TYPE string.
 
-  CONCATENATE 'P' p_parametros-infty '[]' INTO l_infty.
-  ASSIGN (l_infty) TO <f_tabela_infty>.
-  IF sy-subrc NE 0. PERFORM zf_log USING pernr-pernr c_error 'Erro ao Associar Infotipo '(007) p_parametros-infty. ENDIF.
+  IF p_parametros-infty CO '0123456789'.
+    CONCATENATE 'P' p_parametros-infty '[]' INTO l_infty.
+    ASSIGN (l_infty) TO <f_tabela_infty>.
+    IF sy-subrc NE 0. PERFORM zf_log USING pernr-pernr c_error 'Erro ao Associar Infotipo '(007) p_parametros-infty. ENDIF.
+  ELSE.
+    CONCATENATE 'T_' p_parametros-infty '[]' INTO l_infty.
+    ASSIGN (l_infty) TO <f_tabela_infty>.
+    IF sy-subrc NE 0. PERFORM zf_log USING pernr-pernr c_error 'Erro ao Associar Tabela '(022) l_infty. ENDIF.
+  ENDIF.
+
   CHECK <f_tabela_infty> IS ASSIGNED.
 
   CREATE OBJECT l_obj_badi.
@@ -720,21 +743,25 @@ FORM zf_verifica_operacao USING p_parametro   LIKE LINE OF t_parametros
 
   PERFORM zf_monta_query USING p_workarea_sf l_tabela_hist CHANGING l_query.
 
-  CREATE DATA l_tabela TYPE TABLE OF (l_tabela_hist).
-  ASSIGN l_tabela->* TO <f_tabela_hist>.
+  IF NOT l_query IS INITIAL.
 
-  SELECT *
-    INTO TABLE <f_tabela_hist>
-    FROM (l_tabela_hist)
-   WHERE (l_query).
+    CREATE DATA l_tabela TYPE TABLE OF (l_tabela_hist).
+    ASSIGN l_tabela->* TO <f_tabela_hist>.
 
-  IF sy-subrc EQ 0.
-    READ TABLE <f_tabela_hist> ASSIGNING <f_workarea_hist> INDEX 1.
-    ASSIGN COMPONENT 'ID' OF STRUCTURE <f_workarea_hist> TO <f_field>.
-    c_operacao = 'U'.
-    c_id       = <f_field>.
-  ELSE.
-    c_operacao = 'I'.
+    SELECT *
+      INTO TABLE <f_tabela_hist>
+      FROM (l_tabela_hist)
+     WHERE (l_query).
+
+    IF sy-subrc EQ 0.
+      READ TABLE <f_tabela_hist> ASSIGNING <f_workarea_hist> INDEX 1.
+      ASSIGN COMPONENT 'ID' OF STRUCTURE <f_workarea_hist> TO <f_field>.
+      c_operacao = 'U'.
+      c_id       = <f_field>.
+    ELSE.
+      c_operacao = 'I'.
+    ENDIF.
+
   ENDIF.
 
 ENDFORM.                    " ZF_VERIFICA_OPERACAO
@@ -779,15 +806,19 @@ FORM zf_monta_query USING p_workarea_sf
      AND fieldname NE 'MANDT'
      AND keyflag   EQ 'X'.
 
-  LOOP AT t_dd03l INTO w_dd03l.
+  IF sy-subrc EQ 0.
 
-    ASSIGN COMPONENT w_dd03l-fieldname OF STRUCTURE p_workarea_sf TO <f_campo_sf>.
+    LOOP AT t_dd03l INTO w_dd03l.
 
-    CONCATENATE l_query ' AND ' w_dd03l-fieldname ' EQ ' text-011 <f_campo_sf> text-011 INTO l_query RESPECTING BLANKS.
+      ASSIGN COMPONENT w_dd03l-fieldname OF STRUCTURE p_workarea_sf TO <f_campo_sf>.
 
-  ENDLOOP.
+      CONCATENATE l_query ' AND ' w_dd03l-fieldname ' EQ ' text-011 <f_campo_sf> text-011 INTO l_query RESPECTING BLANKS.
 
-  c_query = l_query+4.
+    ENDLOOP.
+
+    c_query = l_query+4.
+
+  ENDIF.
 
 ENDFORM.                    " ZF_MONTA_QUERY
 
@@ -813,57 +844,8 @@ ENDFORM.                    "zf_formata_data
 *&---------------------------------------------------------------------*
 FORM zf_call_sfapi_bkg .
 
-*  DATA: t_param_loc LIKE t_parametros.
-*
-*  DATA: w_param_loc LIKE LINE OF t_parametros,
-*        w_parametro LIKE LINE OF t_parametros.
-*
-*  DATA: l_sessionid   TYPE string,
-*        l_batchsize   TYPE string,
-*        l_count_reg   TYPE i.
-*
-*  t_param_loc[] = t_user[].
-*
-*  SORT t_param_loc BY empresa tabela_sf.
-*  DELETE ADJACENT DUPLICATES FROM t_user_loc COMPARING empresa tabela_sf.
-*  DELETE t_param_loc WHERE tabela_sf EQ 'USER'.
-*
-*  LOOP AT t_param_loc INTO w_param_loc.
-*
-*    LOOP AT t_user INTO w_user WHERE empresa EQ w_user_loc-empresa.
-*
-**/    Efetua o Login no SuccessFactors baseado no Empresa que está sendo processada.
-*      IF l_sessionid IS INITIAL.
-*        PERFORM zf_login_successfactors USING w_user_loc-empresa CHANGING l_sessionid l_batchsize.
-*      ENDIF.
-**/
-*
-**/    Caso seja o último registro da empresa a processar, força o envio do lote mesmo não tendo chegado ao
-**     valor máximo do BatchSize
-*      AT END OF empresa.
-*        l_count_reg = l_batchsize.
-*      ENDAT.
-**/
-*
-**/    Se a quantidade de registro chegar ao total definido no Batchsize, então envia o lote para o SuccessFactors
-*      IF l_count_reg EQ l_batchsize.
-*
-**/ Lógica para o UPSERT no SuccessFactors.
-**/
-*
-*      ENDIF.
-**/
-*
-**/    Efetua o Logout no SuccessFactors.
-*      PERFORM zf_logout_successfactors CHANGING l_sessionid.
-**/
-*
-*    ENDLOOP.
-*
-*  ENDLOOP.
-
   DATA: t_request_data  TYPE zsfi_dt_operation_request_tab2,
-         t_sfobject      TYPE zsfi_dt_operation_request__tab.
+        t_sfobject      TYPE zsfi_dt_operation_request__tab.
 
   DATA: w_parametro     LIKE LINE OF t_parametros,
         w_request_data  LIKE LINE OF t_request_data,
@@ -929,11 +911,18 @@ FORM zf_call_sfapi_bkg .
 
             w_request_data-key   = w_parametro-campo_sf.
             ASSIGN COMPONENT w_parametro-campo_sf OF STRUCTURE <f_w_bkg> TO <f_field>.
-            w_request_data-value = <f_field>.
-            APPEND w_request_data TO t_request_data.
-            CLEAR w_request_data.
 
-            UNASSIGN <f_field>.
+            IF w_parametro-campo_sf EQ 'USERID' AND <f_field>(4) NE 'USR-'.
+              PERFORM zf_formata_userid CHANGING <f_field>.
+            ENDIF.
+
+            IF <f_field> IS ASSIGNED.
+              w_request_data-value = <f_field>.
+              APPEND w_request_data TO t_request_data.
+              CLEAR w_request_data.
+
+              UNASSIGN <f_field>.
+            ENDIF.
 
           ENDLOOP.
 
@@ -1246,16 +1235,24 @@ FORM zf_call_upsert  USING p_credenciais LIKE LINE OF t_credenciais
                 PERFORM zf_log USING space c_error w_result-message space.
               ENDLOOP.
 
+            ELSE.
+
+              PERFORM zf_log USING space c_success 'Upsert Efetuado com Sucesso para a Empresa'(023) p_credenciais-empresa.
+
             ENDIF.
 
             LOOP AT w_response-mt_operation_response-object_edit_result INTO w_result WHERE edit_status NE 'ERROR'.
 
-              ADD 1 TO w_result-index.
-              READ TABLE t_sfobject INTO w_sfobject INDEX w_result-index.
-              READ TABLE w_sfobject-data INTO w_sfobject_data WITH KEY key = 'EXTERNALID'.
-              w_ztbhr_id_suc_usr-id     = w_sfobject_data-value.
-              w_ztbhr_id_suc_usr-userid = w_result-id.
-              APPEND w_ztbhr_id_suc_usr TO t_ztbhr_id_suc_usr.
+              IF NOT w_result-id IS INITIAL.
+
+                ADD 1 TO w_result-index.
+                READ TABLE t_sfobject INTO w_sfobject INDEX w_result-index.
+                READ TABLE w_sfobject-data INTO w_sfobject_data WITH KEY key = 'EXTERNALID'.
+                w_ztbhr_id_suc_usr-id     = w_sfobject_data-value.
+                w_ztbhr_id_suc_usr-userid = w_result-id.
+                APPEND w_ztbhr_id_suc_usr TO t_ztbhr_id_suc_usr.
+
+              ENDIF.
 
             ENDLOOP.
 
@@ -1587,6 +1584,8 @@ FORM zf_formata_userid  CHANGING c_userid.
 
     PERFORM zf_log USING l_pernr c_error 'UserID SuccessFactors não encontrado para a matricula '(021) l_pernr.
 
+    c_userid = l_pernr.
+
   ENDIF.
 
 ENDFORM.                    " ZF_FORMATA_USERID
@@ -1660,29 +1659,25 @@ FORM zf_get_historicos .
     EXPORTING
       cod_funcionario   = l_cod_funcionario
       dados_pessoais    = 'X'
-*     FORM_ACADEMICA    =
-*     POS_GRADUACAO     =
+      form_academica    = 'X'
+      pos_graduacao     = 'X'
       idiomas           = 'X'
-*     FORM_COMPLEMENTAR =
-*     INFORMATICA       =
-*     MOV_VOTORANTIM    =
-*     HIST_PROFISSIONAL =
-*     EXP_PROJETOS      =
-*     SENHA_PAD         =
-*     TREINAMENTO       =
+      form_complementar = 'X'
+      informatica       = 'X'
+      mov_votorantim    = 'X'
+      hist_profissional = 'X'
+      exp_projetos      = 'X'
+      treinamento       = 'X'
     IMPORTING
       t_dadosp          = t_pess
-*     T_FORMAC          =
-*     T_POSGRA          =
+      t_formac          = t_acad
+      t_posgra          = t_posg
       t_idioma          = t_idio
-*     T_FORCOM          =
-*     T_INFORM          =
-*     T_MOVOTO          =
-*     T_HISTPR          =
-*     T_EXPPRO          =
-*     T_SENHAP          =
-*     T_TREINA          =
-    .
-
+      t_forcom          = t_comp
+      t_inform          = t_info
+      t_movoto          = t_movt
+      t_histpr          = t_hist
+      t_exppro          = t_proj
+      t_treina          = t_trei.
 
 ENDFORM.                    " ZF_GET_HISTORICOS
