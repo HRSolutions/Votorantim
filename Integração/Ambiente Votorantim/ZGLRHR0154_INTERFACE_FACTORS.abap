@@ -59,15 +59,16 @@ DATA: t_log                       TYPE TABLE OF ztbhr_sfsf_log,
       t_credenciais               TYPE TABLE OF ztbhr_sfsf_crede,
       t_picklist                  TYPE TABLE OF ztbhr_sfsf_pickl,
       t_tabelas                   TYPE TABLE OF y_tabelas,
-      t_idiomas                   TYPE zcthr_idiomas,
-      t_dados_pessoais            TYPE zcthr_dados_pessoais_string.
+      t_idio                      TYPE zcthr_idiomas,
+      t_pess                      TYPE zcthr_dados_pessoais_string.
 
 *----------------------------------------------------------------------*
 * Work Área                                                            *
 *----------------------------------------------------------------------*
 DATA: w_log                       LIKE LINE OF t_log,
       w_tabelas                   LIKE LINE OF t_tabelas,
-      w_idiomas                   LIKE LINE OF t_idiomas.
+      w_idio                      LIKE LINE OF t_idio,
+      w_pess                      LIKE LINE OF t_pess.
 
 *----------------------------------------------------------------------*
 * Constantes                                                           *
@@ -255,6 +256,8 @@ FORM zf_processa_reg_empregado .
 */  Associa a tabela de IT dinamicamente
     IF w_header_param-tabela_sf EQ 'USER'.
       l_nome_objeto = 'P0000[]'.
+    ELSEIF NOT w_header_param-infty CO '0123456789'.
+      CONCATENATE 'T_' w_header_param-infty '[]' INTO l_nome_objeto.
     ELSE.
       CONCATENATE 'P' w_header_param-infty '[]' INTO l_nome_objeto.
     ENDIF.
@@ -289,18 +292,25 @@ FORM zf_processa_reg_empregado .
         ASSIGN COMPONENT w_parametro-campo_sf  OF STRUCTURE <f_workarea_sf>  TO <f_campo_sf>.
         IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo '(008) w_parametro-campo_sf. ENDIF.
 
-        l_infty = 'P' && w_parametro-infty.
-        ASSIGN (l_infty) TO <f_infty>.
-        IF sy-subrc NE 0. PERFORM zf_log USING pernr-pernr c_error 'Erro ao Associar Infotipo '(007) l_infty. ENDIF.
+        IF w_parametro-infty CO '0123456789'.
 
-        IF <f_infty> IS ASSIGNED.
-          PERFORM zf_reg_infty USING w_parametro <f_workarea_sap> w_header_param-historico CHANGING <f_infty>.
-          IF <f_infty> IS INITIAL. PERFORM zf_log USING pernr-pernr c_error 'Erro ao Associar Infotipo '(007) l_infty. ENDIF.
+          l_infty = 'P' && w_parametro-infty.
+          ASSIGN (l_infty) TO <f_infty>.
+          IF sy-subrc NE 0. PERFORM zf_log USING pernr-pernr c_error 'Erro ao Associar Infotipo '(007) l_infty. ENDIF.
 
-          ASSIGN COMPONENT w_parametro-campo_sap OF STRUCTURE <f_infty> TO <f_campo_sap>.
-          IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo '(008) w_parametro-campo_sap. ENDIF.
+          IF <f_infty> IS ASSIGNED.
+            PERFORM zf_reg_infty USING w_parametro <f_workarea_sap> w_header_param-historico CHANGING <f_infty>.
+            IF <f_infty> IS INITIAL. PERFORM zf_log USING pernr-pernr c_error 'Erro ao Associar Infotipo '(007) l_infty. ENDIF.
+
+            ASSIGN COMPONENT w_parametro-campo_sap OF STRUCTURE <f_infty> TO <f_campo_sap>.
+            IF sy-subrc NE 0. PERFORM zf_log USING space c_error 'Erro ao Associar campo '(008) w_parametro-campo_sap. ENDIF.
+          ENDIF.
+
+        ELSE.
+
+          ASSIGN COMPONENT w_parametro-campo_sap OF STRUCTURE <f_workarea_sap> TO <f_campo_sap>.
+
         ENDIF.
-
         IF <f_campo_sap> IS ASSIGNED AND <f_campo_sf> IS ASSIGNED.
 
 */        Preenche o campo que será enviado para o SuccessFactors
@@ -1644,7 +1654,7 @@ FORM zf_get_historicos .
 
   l_cod_funcionario = pernr-pernr.
 
-  CLEAR: t_idiomas.
+  CLEAR: t_idio, t_pess.
 
   CALL FUNCTION 'ZFHR_DOSSIE'
     EXPORTING
@@ -1661,10 +1671,10 @@ FORM zf_get_historicos .
 *     SENHA_PAD         =
 *     TREINAMENTO       =
     IMPORTING
-      t_dadosp          = t_dados_pessoais
+      t_dadosp          = t_pess
 *     T_FORMAC          =
 *     T_POSGRA          =
-      t_idioma          = t_idiomas
+      t_idioma          = t_idio
 *     T_FORCOM          =
 *     T_INFORM          =
 *     T_MOVOTO          =
